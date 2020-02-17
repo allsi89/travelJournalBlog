@@ -14,19 +14,20 @@ const routes: Routes = [
     component: DefaultHomeComponent
   },
   {
-    path: 'profile',
-    pathMatch: 'full',
+    path: 'user/profile',
     component: ProfileComponent
   },
   {
-    path: 'settings',
-    pathMatch: 'full',
+    path: 'user/settings',
     component: SettingsComponent
   },
   {
-    path: 'notifications',
-    pathMatch: 'full',
+    path: 'user/notifications',
     component: NotificationsComponent
+  },
+  {
+    path: 'user/:id',
+    component: ProfileComponent
   },
   {
     path: 'trending',
