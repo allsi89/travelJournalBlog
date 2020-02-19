@@ -1,48 +1,57 @@
-<!-- Default form register -->
-<form class="text-center border border-light p-5 auth">
+<section class="register">
+  <div fxLayout="column" fxLayoutAlign="center center" class="reg-div">
+    <h1>Welcome to Travel Journal</h1>
+  </div>
 
-    <p class="h4 mb-4">Register</p>
-
-    <div class="form-row mb-4">
-      <div class="col">
-        <!-- Username -->
-        <input type="text" id="defaultRegisterFormUsername" class="form-control" placeholder="Username">
+  <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="20px" [formGroup]="regForm" class="register">
+    <div>
+      <h2>Register</h2>
+    </div>
+    <div fxLayout="row" fxFlex fxLayoutGap="10px">
+      <mat-form-field>
+        <input formControlName="firstName" matInput type="text" id="firstName" placeholder="First Name">
+        <mat-error>{{errors.required}}</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input formControlName="lastName" matInput type="text" id="lastName" placeholder="Last Name">
+        <mat-error>{{errors.required}}</mat-error>
+      </mat-form-field>
+    </div>
+    <div fxLayout="row" fxFlex fxLayoutGap="10px">
+        <mat-form-field>
+          <mat-label>Username</mat-label>
+          <input formControlName="username" matInput type="text" id="username">
+          <mat-error *ngIf="regForm.controls.username.hasError('required')">{{errors.required}}</mat-error>
+          <mat-error *ngIf="regForm.controls.username.hasError('minlength') || regForm.controls.username.hasError('maxlength')">{{errors.usernameLength}}</mat-error>
+        </mat-form-field>
+      <div>
+        <mat-form-field>
+          <input formControlName="email" matInput type="email" id="email" placeholder="Email">
+          <mat-error *ngIf="regForm.controls.email.hasError('required')">{{errors.required}}</mat-error>
+          <mat-error *ngIf="regForm.controls.email.hasError('email')">{{errors.emailInvalid}}</mat-error>
+        </mat-form-field>
       </div>
     </div>
-
-    <div class="form-row mb-4">
-        <div class="col">
-          <!-- First name -->
-          <input type="text" id="defaultRegisterFormFirstName" class="form-control" placeholder="First name">
-        </div>
-        <div class="col">
-          <!-- Last name -->
-          <input type="text" id="defaultRegisterFormLastName" class="form-control" placeholder="Last name">
-        </div>
+    <div fxLayout="row" fxFlex fxLayoutGap="10px">
+        <mat-form-field>
+          <input formControlName="password" matInput type="password" id="password" placeholder="Password">
+          <mat-error *ngIf="regForm.controls.password.hasError('required')">{{errors.required}}</mat-error>
+          <mat-error *ngIf="regForm.controls.password.hasError('minlength') || regForm.controls.password.hasError('maxlength')">{{errors.passwordLength}}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="confirmPassword" matInput type="password" id="confirmPassword"
+          placeholder="Confirm Password">
+          <mat-error *ngIf="regForm.controls.confirmPassword.hasError('required')">{{errors.required}}</mat-error>
+          <mat-error *ngIf="regForm.controls.confirmPassword.hasError('minlength') || regForm.controls.confirmPassword.hasError('maxlength')">{{errors.confirmPasswordLength}}</mat-error>
+          <mat-error *ngIf="regForm.controls.confirmPassword.errors?.notMatch"></mat-error>
+        </mat-form-field>
       </div>
-
-    <!-- E-mail -->
-    <input type="email" id="email" class="form-control mb-4" placeholder="E-mail">
-
-    <!-- Password -->
-    <input type="password" id="password" class="form-control" placeholder="Password" aria-describedby="defaultRegisterFormPasswordHelpBlock">
-    <small id="defaultRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">
-      At least 8 characters
-    </small>
-
-    <input type="repeatPassword" id="repeatPassword" class="form-control" placeholder="Repeat Password" aria-describedby="defaultRegisterFormPasswordHelpBlock">
-    <small id="defaultRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">
-      At least 8 characters
-    </small>
-
-    <!-- Sign up button -->
-    <button mdbBtn color="info" block="true" class="my-4" type="submit">Register</button>
-
-    <!-- Social register -->
-    <hr>
-
-    <!-- Terms of service -->
-    <p>Already have an account? <a href="/login">Login</a></p>
-
+      <div>
+        <mat-error *ngIf="regForm.controls.confirmPassword.errors?.notMatch">{{errors.passwordsNotMatch}}</mat-error>
+    </div>
+    <button mat-raised-button [disabled]="regForm.invalid" type="submit">Register</button>
   </form>
-  <!-- Default form register -->
+  <div fxLayout="column" fxLayoutAlign="center center" class="reg-div">
+    <p>Already have an account? <a routerLink="/login">Login</a></p>
+  </div>
+</section>

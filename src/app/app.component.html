@@ -3,9 +3,12 @@
         <app-side-nav></app-side-nav>
     </mat-sidenav>
     <mat-sidenav-content>
-        <app-toolbar (onToggleSidenav)="sidenav.toggle()"></app-toolbar>
-          <router-outlet></router-outlet>
+        <main>
+            <app-toolbar (onToggleSidenav)="sidenav.toggle()"></app-toolbar>
+        </main>
+        <router-outlet></router-outlet>
+        <footer>
+            <app-footer></app-footer>
+        </footer>
     </mat-sidenav-content>
 </mat-sidenav-container>
-<app-footer></app-footer>
-

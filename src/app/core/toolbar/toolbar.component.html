@@ -23,14 +23,14 @@
             <li *ngIf="!user">
               <a routerLink="/register">Register</a>
             </li>
-            <li *ngIf="user">
+            <li *ngIf="!user">
               <a routerLink="/user/notifications">
-                <mat-icon>notifications</mat-icon>num Notifications
+                <mat-icon matPrefix>notifications</mat-icon>num Notifications
               </a>
             </li>
-            <li *ngIf="user">
+            <li *ngIf="!user">
               <a routerLink="/user/profile">
-                <mat-icon>account_circle</mat-icon>Profile
+                <mat-icon matPrefix>account_circle</mat-icon>Profile
               </a>
             </li>
             <li *ngIf="user">

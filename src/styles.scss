@@ -4,8 +4,6 @@
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 
 
-
-
 .loader {
   margin: 100px auto;
   font-size: 25px;
@@ -94,11 +92,10 @@
 }
 
 body {
-  background: rgb(241, 250, 242);
-  background: radial-gradient(circle, rgba(241, 250, 242, 1) 0%, rgba(215, 230, 249, 1) 100%);
+  // background: rgb(241, 250, 242) !important;
+  // background: radial-gradient(circle, rgba(241, 250, 242, 1) 0%, rgba(215, 230, 249, 1) 100%) !important;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
-
-body {font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 html, body { 
   margin: 0;
@@ -111,4 +108,14 @@ html, body {
   width: auto;
   flex-direction: column-reverse;
   justify-content: flex-end;
+}
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: rgb(155, 145, 161);
+  color: white;
+  text-align: center;
 }
