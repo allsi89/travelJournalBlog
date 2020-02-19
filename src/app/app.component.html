@@ -1,4 +1,22 @@
-<app-navigation></app-navigation>
-<router-outlet></router-outlet>
+<mat-sidenav-container>
+    <mat-sidenav #sidenav role="navigation">
+        <app-side-nav></app-side-nav>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <mat-toolbar color="primary">
+            <button mat-icon-button (click)="sidenav.toggle()">
+              <mat-icon>menu</mat-icon>
+            </button>
+            <div fxFlex fxLayoutAlign="flex-start">
+                <app-nav-left></app-nav-left>
+            </div>
+            <div fxFlex fxLayoutAlign="flex-end">
+                <app-nav-right></app-nav-right>
+            </div>
+            <app-navigation></app-navigation>
+          </mat-toolbar>
+          <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>
 <app-footer></app-footer>
 

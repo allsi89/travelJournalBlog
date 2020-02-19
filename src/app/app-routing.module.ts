@@ -1,17 +1,19 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ListFiveArticlesComponent as DefaultHomeComponent } from './article/list-five-articles/list-five-articles.component';
 import { ProfileComponent } from './user/profile/profile.component';
 import { SettingsComponent } from './user/settings/settings.component';
 import { NotificationsComponent } from './user/notifications/notifications.component';
-import { ListTrendingComponent } from './article/list-trending/list-trending.component';
-import { ListRecentComponent } from './article/list-recent/list-recent.component';
+import { ArticlesComponent } from './home/articles/articles.component';
+import { TrendingComponent } from './home/trending/trending.component';
+import { RecentComponent } from './home/recent/recent.component';
+import { LoginComponent } from './auth/login/login.component';
+import { RegisterComponent } from './auth/register/register.component';
 
 const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    component: DefaultHomeComponent
+    component: ArticlesComponent
   },
   {
     path: 'user/profile',
@@ -32,12 +34,22 @@ const routes: Routes = [
   {
     path: 'trending',
     pathMatch: 'full',
-    component: ListTrendingComponent
+    component: TrendingComponent
   },
   {
     path: 'recent',
     pathMatch: 'full',
-    component: ListRecentComponent
+    component: RecentComponent
+  },
+  {
+    path: 'login',
+    pathMatch: 'full',
+    component: LoginComponent
+  },
+  {
+    path: 'register',
+    pathMatch: 'full',
+    component: RegisterComponent
   }
 
 ];

@@ -4,7 +4,23 @@
 // }
 
 .btn-floating {
-    padding: 5px 10px;
-    background: #fff;
-    margin: 10px 3px;
+  padding: 5px 10px;
+  background: #fff;
+  margin: 10px 3px;
+}
+
+mat-sidenav-container,
+mat-sidenav-content,
+mat-sidenav {
+  height: 100%;
+  overflow: hidden;
+}
+
+mat-sidenav {
+  width: 250px;
+  overflow: hidden;
+}
+
+main {
+  padding: 10px;
 }

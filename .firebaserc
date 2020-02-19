@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "angular-allsi": {
+      "hosting": {
+        "travelJournalBlog": [
+          "angular-allsi"
+        ]
+      }
+    }
+  }
+}

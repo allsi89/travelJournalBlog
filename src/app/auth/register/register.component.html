@@ -1,0 +1,48 @@
+<!-- Default form register -->
+<form class="text-center border border-light p-5 auth">
+
+    <p class="h4 mb-4">Register</p>
+
+    <div class="form-row mb-4">
+      <div class="col">
+        <!-- Username -->
+        <input type="text" id="defaultRegisterFormUsername" class="form-control" placeholder="Username">
+      </div>
+    </div>
+
+    <div class="form-row mb-4">
+        <div class="col">
+          <!-- First name -->
+          <input type="text" id="defaultRegisterFormFirstName" class="form-control" placeholder="First name">
+        </div>
+        <div class="col">
+          <!-- Last name -->
+          <input type="text" id="defaultRegisterFormLastName" class="form-control" placeholder="Last name">
+        </div>
+      </div>
+
+    <!-- E-mail -->
+    <input type="email" id="email" class="form-control mb-4" placeholder="E-mail">
+
+    <!-- Password -->
+    <input type="password" id="password" class="form-control" placeholder="Password" aria-describedby="defaultRegisterFormPasswordHelpBlock">
+    <small id="defaultRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">
+      At least 8 characters
+    </small>
+
+    <input type="repeatPassword" id="repeatPassword" class="form-control" placeholder="Repeat Password" aria-describedby="defaultRegisterFormPasswordHelpBlock">
+    <small id="defaultRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">
+      At least 8 characters
+    </small>
+
+    <!-- Sign up button -->
+    <button mdbBtn color="info" block="true" class="my-4" type="submit">Register</button>
+
+    <!-- Social register -->
+    <hr>
+
+    <!-- Terms of service -->
+    <p>Already have an account? <a href="/login">Login</a></p>
+
+  </form>
+  <!-- Default form register -->
