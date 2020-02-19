@@ -1,0 +1,41 @@
+<mat-toolbar color="primary">
+    <button mat-icon-button (click)="toggleSidenav()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <div>
+        <ul class="pTFixed" fxFlex fxLayout fxLayoutAlign="flex-start" fxLayoutGap="15px">
+            <li>
+              <a routerLink="/">Travel Journal</a>
+            </li>
+            <li>
+              <a routerLink="/trending">Trending</a>
+            </li>
+            <li>
+              <a routerLink="/recent">Recent</a>
+            </li>
+          </ul>
+    </div>
+    <div fxFlex fxLayoutAlign="flex-end" >
+        <ul class="pTFixed" fxFlex fxLayout fxLayoutAlign="flex-end" fxLayoutGap="15px" >
+            <li *ngIf="!user">
+              <a routerLink="/login">Login</a>
+            </li>
+            <li *ngIf="!user">
+              <a routerLink="/register">Register</a>
+            </li>
+            <li *ngIf="user">
+              <a routerLink="/user/notifications">
+                <mat-icon>notifications</mat-icon>num Notifications
+              </a>
+            </li>
+            <li *ngIf="user">
+              <a routerLink="/user/profile">
+                <mat-icon>account_circle</mat-icon>Profile
+              </a>
+            </li>
+            <li *ngIf="user">
+              <a routerLink="/logout">LogOut</a>
+            </li>
+          </ul>
+    </div>
+  </mat-toolbar>

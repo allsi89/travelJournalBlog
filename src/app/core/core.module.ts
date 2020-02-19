@@ -6,12 +6,11 @@ import {MaterialModule} from '../material.module';
 
 import { FooterComponent } from './footer/footer.component';
 import { SideNavComponent } from './side-nav/side-nav.component';
-import { NavRightComponent } from './nav-right/nav-right.component';
-import { NavLeftComponent } from './nav-left/nav-left.component';
+import { ToolbarComponent } from './toolbar/toolbar.component';
 
 
 @NgModule({
-  declarations: [FooterComponent, SideNavComponent, NavRightComponent, NavLeftComponent],
+  declarations: [FooterComponent, SideNavComponent, ToolbarComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -20,6 +19,6 @@ import { NavLeftComponent } from './nav-left/nav-left.component';
 
   ],
   schemas:[NO_ERRORS_SCHEMA],
-  exports: [FooterComponent, SideNavComponent, NavRightComponent, NavLeftComponent]
+  exports: [FooterComponent, SideNavComponent, ToolbarComponent]
 })
 export class CoreModule { }
