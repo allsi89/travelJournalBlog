@@ -1,23 +1,19 @@
   <section class="login">
-    <div fxLayout="column" fxLayoutAlign="center center">
-      <h1>Welcome to Travel Journal</h1>
-    </div>
-
-    <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" [formGroup] ="eventForm">
+    <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" [formGroup] ="loginForm">
       <div>
         <h2>Login</h2>
       </div>
       <mat-form-field> 
-        <input formControlName="username" matInput type="text" id="username" placeholder="Username">
-        <mat-error>Please enter a valid username</mat-error>
+        <input formControlName="email" matInput type="email" id="email" placeholder="Email">
+        <mat-error>Please enter a valid email</mat-error>
       </mat-form-field>
       <mat-form-field>
         <input formControlName="password" matInput type="password" id="password" placeholder="Password">
         <mat-error>Please enter a valid password</mat-error>
       </mat-form-field>
-      <button mat-raised-button [disabled]="eventForm.invalid" type="submit">Login</button>
+      <button mat-raised-button [disabled]="loginForm.invalid" type="submit" color="primary" (click) = "login()">Login</button>
     </form>
-    <div fxLayout="column" fxLayoutAlign="center center">
+    <div fxLayout="column" fxLayoutAlign="center center" class="title-div">
       <p>Don't have an account? <a routerLink="/register">Register</a></p>
     </div>
   </section>

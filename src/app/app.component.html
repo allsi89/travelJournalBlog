@@ -1,14 +1,17 @@
-<mat-sidenav-container>
-    <mat-sidenav #sidenav role="navigation">
-        <app-side-nav></app-side-nav>
-    </mat-sidenav>
-    <mat-sidenav-content>
-        <main>
-            <app-toolbar (onToggleSidenav)="sidenav.toggle()"></app-toolbar>
-        </main>
-        <router-outlet></router-outlet>
-        <footer>
-            <app-footer></app-footer>
-        </footer>
-    </mat-sidenav-content>
-</mat-sidenav-container>
+<div style="height: 100vh;">
+    <app-toolbar (onToggleSidenav)="sidenav.toggle()"></app-toolbar>
+    <mat-sidenav-container fxFlexFill>
+        <mat-sidenav #sidenav role="navigation" fxLayout="column" mode="over" opened="false">
+            <app-side-nav></app-side-nav>
+        </mat-sidenav>
+        <mat-sidenav-content fxFlexFill>
+            <main>
+                <app-header></app-header>
+                <router-outlet></router-outlet>
+            </main>
+            <footer>
+                <app-footer></app-footer>
+            </footer>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>

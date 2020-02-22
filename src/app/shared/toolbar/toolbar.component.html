@@ -1,0 +1,35 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button (click)="toggleSidenav()" class="menu-button">
+    <mat-icon>menu</mat-icon>
+    <span>
+      Travel Journal
+    </span>
+  </button>
+  <div fxFlex fxShow="true" fxHide.lt-md="true">
+    <ul class="pTFixed" fxFlex fxLayout fxLayoutAlign="flex-end" fxLayoutGap="15px">
+      <li>
+        <a routerLink="/">Home</a>
+      </li>
+      <li>
+        <a routerLink="/post/all-posts">Posts</a>
+      </li>
+      <li>
+        <a *ngIf="isAuth" routerLink="/post/create">Create Post</a>
+      </li>
+      <li *ngIf="!isAuth">
+        <a routerLink="/login">Login</a>
+      </li>
+      <li *ngIf="!isAuth">
+        <a routerLink="/register">Register</a>
+      </li>
+      <li *ngIf="isAuth">
+        <a routerLink="/user/profile">
+          <mat-icon matPrefix>account_circle</mat-icon>Profile
+        </a>
+      </li>
+      <li *ngIf="isAuth">
+        <a (click)="logout()">LogOut</a>
+      </li>
+    </ul>
+  </div>
+</mat-toolbar>

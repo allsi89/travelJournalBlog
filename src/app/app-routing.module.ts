@@ -3,53 +3,34 @@ import { Routes, RouterModule } from '@angular/router';
 import { ProfileComponent } from './user/profile/profile.component';
 import { SettingsComponent } from './user/settings/settings.component';
 import { NotificationsComponent } from './user/notifications/notifications.component';
-import { ArticlesComponent } from './home/articles/articles.component';
-import { TrendingComponent } from './home/trending/trending.component';
-import { RecentComponent } from './home/recent/recent.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
+import { HomeComponent } from './home/home/home.component';
+import { AllComponent } from './post/all/all.component';
+import { CreateComponent } from './post/create/create.component';
+import { InfoComponent } from './post/info/info.component';
+import { AllPostsResolver } from './core/resolvers/all-posts.resolver';
+import { PostInfoResolver } from './core/resolvers/post-info.resolver';
 
 const routes: Routes = [
+  { path: '', pathMatch: 'full', component: HomeComponent},
+  { path: 'home',  component: HomeComponent},
+  
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
   {
-    path: '',
-    pathMatch: 'full',
-    component: ArticlesComponent
+    path: 'user', children: [
+      { path: 'profile', component: ProfileComponent },
+      { path: 'settings', component: SettingsComponent },
+      { path: 'notifications', component: NotificationsComponent }
+    ]
   },
   {
-    path: 'user/profile',
-    component: ProfileComponent
-  },
-  {
-    path: 'user/settings',
-    component: SettingsComponent
-  },
-  {
-    path: 'user/notifications',
-    component: NotificationsComponent
-  },
-  {
-    path: 'user/:id',
-    component: ProfileComponent
-  },
-  {
-    path: 'trending',
-    pathMatch: 'full',
-    component: TrendingComponent
-  },
-  {
-    path: 'recent',
-    pathMatch: 'full',
-    component: RecentComponent
-  },
-  {
-    path: 'login',
-    pathMatch: 'full',
-    component: LoginComponent
-  },
-  {
-    path: 'register',
-    pathMatch: 'full',
-    component: RegisterComponent
+    path: 'post', children:[
+      { path: 'all-posts', component: AllComponent, resolve: {postList: AllPostsResolver} },
+      { path: 'create', component: CreateComponent },
+      { path: 'info/:id', component: InfoComponent, resolve: { post: PostInfoResolver } }
+    ]
   }
 
 ];
@@ -59,6 +40,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes)
   ],
   exports: [RouterModule],
-  declarations: []
+  declarations: [],
+  providers: [PostInfoResolver, AllPostsResolver]
 })
 export class AppRoutingModule { }

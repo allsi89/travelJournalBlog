@@ -1,17 +1,23 @@
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ArticlesComponent } from './articles/articles.component';
-import { RecentComponent } from './recent/recent.component';
-import { TrendingComponent } from './trending/trending.component';
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MaterialModule } from '../material.module';
+import { HomeComponent } from './home/home.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CarouselComponent } from './carousel/carousel.component';
+
 
 
 
 @NgModule({
-  declarations: [ArticlesComponent, RecentComponent, TrendingComponent],
+  declarations: [HomeComponent, 
+    CarouselComponent, 
+   ],
   imports: [
     CommonModule,
-    MDBBootstrapModule.forRoot()
+    FlexLayoutModule,
+    MaterialModule,
+    BrowserAnimationsModule
   ],
   schemas: [NO_ERRORS_SCHEMA],
 })

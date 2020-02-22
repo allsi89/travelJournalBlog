@@ -1,57 +1,35 @@
 <section class="register">
-  <div fxLayout="column" fxLayoutAlign="center center" class="reg-div">
-    <h1>Welcome to Travel Journal</h1>
-  </div>
-
-  <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="20px" [formGroup]="regForm" class="register">
+  <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="20px" [formGroup]="regForm">
     <div>
       <h2>Register</h2>
     </div>
-    <div fxLayout="row" fxFlex fxLayoutGap="10px">
-      <mat-form-field>
-        <input formControlName="firstName" matInput type="text" id="firstName" placeholder="First Name">
-        <mat-error>{{errors.required}}</mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <input formControlName="lastName" matInput type="text" id="lastName" placeholder="Last Name">
-        <mat-error>{{errors.required}}</mat-error>
-      </mat-form-field>
-    </div>
-    <div fxLayout="row" fxFlex fxLayoutGap="10px">
-        <mat-form-field>
-          <mat-label>Username</mat-label>
-          <input formControlName="username" matInput type="text" id="username">
-          <mat-error *ngIf="regForm.controls.username.hasError('required')">{{errors.required}}</mat-error>
-          <mat-error *ngIf="regForm.controls.username.hasError('minlength') || regForm.controls.username.hasError('maxlength')">{{errors.usernameLength}}</mat-error>
-        </mat-form-field>
-      <div>
-        <mat-form-field>
-          <input formControlName="email" matInput type="email" id="email" placeholder="Email">
-          <mat-error *ngIf="regForm.controls.email.hasError('required')">{{errors.required}}</mat-error>
-          <mat-error *ngIf="regForm.controls.email.hasError('email')">{{errors.emailInvalid}}</mat-error>
-        </mat-form-field>
-      </div>
-    </div>
-    <div fxLayout="row" fxFlex fxLayoutGap="10px">
-        <mat-form-field>
-          <input formControlName="password" matInput type="password" id="password" placeholder="Password">
-          <mat-error *ngIf="regForm.controls.password.hasError('required')">{{errors.required}}</mat-error>
-          <mat-error *ngIf="regForm.controls.password.hasError('minlength') || regForm.controls.password.hasError('maxlength')">{{errors.passwordLength}}</mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <input formControlName="confirmPassword" matInput type="password" id="confirmPassword"
-          placeholder="Confirm Password">
-          <mat-error *ngIf="regForm.controls.confirmPassword.hasError('required')">{{errors.required}}</mat-error>
-          <mat-error *ngIf="regForm.controls.confirmPassword.hasError('minlength') || regForm.controls.confirmPassword.hasError('maxlength')">{{errors.confirmPasswordLength}}</mat-error>
-          <mat-error *ngIf="regForm.controls.confirmPassword.errors?.notMatch"></mat-error>
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-error *ngIf="regForm.controls.confirmPassword.errors?.notMatch">{{errors.passwordsNotMatch}}</mat-error>
-    </div>
-    <button mat-raised-button [disabled]="regForm.invalid" type="submit">Register</button>
+    <mat-form-field>
+      <input formControlName="username" matInput type="text" id="username"  placeholder="Username">
+      <mat-error *ngIf="regForm.controls.username.hasError('required')">{{errors.required}}</mat-error>
+      <mat-error
+        *ngIf="regForm.controls.username.hasError('minlength') || regForm.controls.username.hasError('maxlength')">
+        {{errors.usernameLength}}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input formControlName="email" matInput type="email" id="email" placeholder="Email">
+      <mat-error *ngIf="regForm.controls.email.hasError('required')">{{errors.required}}</mat-error>
+      <mat-error *ngIf="regForm.controls.email.hasError('email')">{{errors.emailInvalid}}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input formControlName="password" matInput type="password" id="password" placeholder="Password">
+      <mat-error *ngIf="regForm.controls.password.hasError('required')">{{errors.required}}</mat-error>
+      <mat-error
+        *ngIf="regForm.controls.password.hasError('minlength') || regForm.controls.password.hasError('maxlength')">
+        {{errors.passwordLength}}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input formControlName="confirmPassword" matInput type="password" id="confirmPassword" placeholder="Confirm Password">
+      <mat-error *ngIf="regForm.controls.confirmPassword.hasError('required')">{{errors.required}}</mat-error>
+      <mat-error *ngIf="regForm.controls.confirmPassword.errors?.notMatch">{{errors.passwordsNotMatch}}</mat-error>
+    </mat-form-field>
+    <button mat-raised-button [disabled]="regForm.invalid" type="submit" color="primary" (click)="register()">Register</button>
   </form>
-  <div fxLayout="column" fxLayoutAlign="center center" class="reg-div">
+  <div fxLayout="column" fxLayoutAlign="center center" class="title-div">
     <p>Already have an account? <a routerLink="/login">Login</a></p>
   </div>
 </section>

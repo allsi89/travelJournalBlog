@@ -5,7 +5,6 @@ export const errorMsgs: { [key: string] : string} = {
     usernameLength: 'Username must be between 6 and 20 characters',
     emailInvalid: 'Email must be a valid email address (username@domain)',
     passwordLength: 'Password must be between 6 and 15 characters',
-    confirmPasswordLength: 'Confirm Password must be between 6 and 15 characters',
     passwordsNotMatch: `Passwords don't match`
 }
 

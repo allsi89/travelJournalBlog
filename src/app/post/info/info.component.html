@@ -1,0 +1,80 @@
+<section>
+  <div fxLayout="column" fxLayoutAlign="center center">
+    <div class="title">
+      <h1>{{post?.title}}</h1>
+    </div>
+    <div>
+      <div>
+        <mat-icon matPrefix>person</mat-icon>{{post.author}}
+      </div>
+      <p>{{post?.createdOn | date: 'MMM d, y, hh:mm'}}</p>
+    </div>
+    <p  fxLayoutGap="2em">
+      <mat-icon matBadge={{post?.likes}} matBadgeColor="warn" class="success">thumb_up</mat-icon>
+      <mat-icon matBadge={{post?.dislikes}} matBadgeColor="primary" color="accent">thumb_down</mat-icon>
+    </p>
+    <!-- <div>
+      <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Picture">
+    </div> -->
+    <br>
+    <br>
+
+  </div>
+  <div fxLayout="column" fxLayoutAlign="end end" fxLayoutGap="4em">
+    <p>
+      <button mat-icon-button (click)="likePost()">
+        <mat-icon class="success">thumb_up</mat-icon>
+      </button>
+      <button mat-icon-button (click)="dislikePost()">
+        <mat-icon color="accent">thumb_down</mat-icon>
+      </button>
+      <button mat-icon-button>
+        <mat-icon class="accentB">edit</mat-icon>
+      </button>
+      <button mat-icon-button color="red">
+        <mat-icon color="warn">delete</mat-icon>
+      </button>
+    </p>
+  </div>
+  <br>
+  <br>
+</section>
+
+
+
+
+
+<!-- <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Personal data
+        </mat-panel-title>
+        <mat-panel-description>
+          Type your name and age
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+  
+      <mat-form-field>
+        <mat-label>First name</mat-label>
+        <input matInput>
+      </mat-form-field>
+  
+      <mat-form-field>
+        <mat-label>Age</mat-label>
+        <input matInput type="number" min="1">
+      </mat-form-field>
+    </mat-expansion-panel>
+    <mat-expansion-panel (opened)="panelOpenState = true"
+                         (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Self aware panel
+        </mat-panel-title>
+        <mat-panel-description>
+          Currently I am {{panelOpenState ? 'open' : 'closed'}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <p>I'm visible because I am open</p>
+    </mat-expansion-panel>
+  </mat-accordion> -->

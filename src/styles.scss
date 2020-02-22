@@ -2,6 +2,7 @@
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+// @import "~bootstrap/dist/css/bootstrap.css";
 
 
 .loader {
@@ -92,14 +93,17 @@
 }
 
 body {
-  // background: rgb(241, 250, 242) !important;
+  // background:white;
   // background: radial-gradient(circle, rgba(241, 250, 242, 1) 0%, rgba(215, 230, 249, 1) 100%) !important;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-html, body { 
+html,
+body {
   margin: 0;
   height: 100%;
+  overflow: hidden;
+  background-color: white;
 }
 
 .right-align {
@@ -118,4 +122,50 @@ footer {
   background-color: rgb(155, 145, 161);
   color: white;
   text-align: center;
+}
+
+.page-title-h {
+  color: #2b7e9e;
+  margin-top: 50px;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.page-title-p {
+  color: #513670;
+  font-style: italic;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
+}
+
+.title-div{
+  margin-top: 5%;
+}
+
+mat-sidenav {
+  background-color: rgb(127, 81, 187) !important;
+  
+}
+
+main{
+  margin-bottom: 100px;
+}
+
+// .scrollable {
+//   overflow: auto;
+//   max-height: 100vh;
+//   background-color: white;
+// }
+
+mat-sidenav-content{
+  background-color: white;
+  overflow: auto !important;
+  max-height: 100vh;
+}
+
+mat-icon.success{
+  color: teal;
+}
+
+mat-icon.accentB{
+  color: rgb(20, 36, 184);
 }
