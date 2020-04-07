@@ -2,6 +2,8 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { IAppState, getIsAuthenticated } from 'src/app/+store';
 import { Observable } from 'rxjs';
+import { Logout } from 'src/app/+store/auth/actions';
+import { UserPosts } from 'src/app/+store/post/actions';
 
 @Component({
   selector: 'app-toolbar',
@@ -10,23 +12,21 @@ import { Observable } from 'rxjs';
 })
 export class ToolbarComponent {
   @Output() onToggleSidenav = new EventEmitter<void>();
-  @Output() onLogout = new EventEmitter<void>();
-  @Output() onGetUserPosts = new EventEmitter<void>();
   isAuth$: Observable<boolean>;
 
   constructor( private store: Store<IAppState> ) {
     this.isAuth$ = this.store.select(getIsAuthenticated);
   }
-
-  logout() {
-    this.onLogout.emit();
-  }
-
+  
   toggleSidenav() {
     this.onToggleSidenav.emit();
   }
-
+  
   getUserPosts(){
-    this.onGetUserPosts.emit();
+    this.store.dispatch(new UserPosts(null));
+  }
+
+  logout() {
+    this.store.dispatch(new Logout())
   }
 }

@@ -26,10 +26,7 @@ export class ListComponent implements OnInit {
     this.postList$.subscribe;
   }
 
-  getUserPosts(post: IPost) {
-    const user = { id: post.uid, username: post.author, email: null };
-    this.store.dispatch(new UserPosts(user));
-  }
+ 
 
   toggle() {
     this.cardView = !this.cardView;

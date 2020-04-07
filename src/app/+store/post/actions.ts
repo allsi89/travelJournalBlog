@@ -6,6 +6,9 @@ export const ActionTypes = {
   CreatePost: "[POST] Create Post",
   CreatePostSuccess: "[POST] Create Post Success",
   CreatePostFailed: "[POST] Create Post Failed",
+  PostInfo: "[POST] Get Post Info",
+  PostInfoSuccess: "[POST] Get Post Info Success",
+  PostInfoFailed: "[POST] Get Post Info Failed",
   GetAllPosts: "[POST] Get All Posts",
   GetAllPostsSuccess: "[POST] Get All Posts Success",
   GetAllPostsFailed: "[POST] Get All Posts Failes",
@@ -27,9 +30,9 @@ export class CreatePost implements IAction<any> {
   constructor(public payload: any) { }
 }
 
-export class CreatePostSuccess implements IAction<null> {
+export class CreatePostSuccess implements IAction<{id: string}> {
   type = ActionTypes.CreatePostSuccess;
-  constructor(public payload: null = null) { }
+  constructor(public payload: {id: string}) { }
 }
 
 export class CreatePostFailed implements IAction<{ error: any }> {
@@ -37,7 +40,23 @@ export class CreatePostFailed implements IAction<{ error: any }> {
   constructor(public payload: { error: any }) { }
 }
 
-/** Get All Posts */  
+/** Get Post Info */
+export class PostInfo implements IAction<{ id: string }> {
+  type = ActionTypes.PostInfo;
+  constructor(public payload: { id: string }) { }
+}
+
+export class PostInfoSuccess implements IAction<IPost> {
+  type = ActionTypes.PostInfoSuccess;
+  constructor(public payload: IPost) { }
+}
+
+export class PostInfoFailed implements IAction<{ error: any }> {
+  type = ActionTypes.PostInfoFailed;
+  constructor(public payload: { error: any }) { }
+}
+
+/** Get All Posts */
 export class AllPosts implements IAction<null> {
   type = ActionTypes.GetAllPosts;
   constructor(public payload: null = null) { }
@@ -72,33 +91,33 @@ export class UserPostsFailed implements IAction<{ error: any }> {
 /** Delete Post */
 export class DeletePost implements IAction<IPost> {
   type = ActionTypes.DeletePost;
-  constructor(public payload: IPost) {}
+  constructor(public payload: IPost) { }
 }
 
 export class DeletePostSuccess implements IAction<null> {
   type = ActionTypes.DeletePostSuccess;
-  constructor(public payload: null = null) {}
+  constructor(public payload: null = null) { }
 }
 
 export class DeletePostFailed implements IAction<{ error: any }> {
   type = ActionTypes.DeletePostFailed;
-  constructor(public payload: { error: any }) {}
+  constructor(public payload: { error: any }) { }
 }
 
 /** Like Post */
-export class LikePost implements IAction<{ post:IPost, id: string }> {
+export class LikePost implements IAction<{ post: IPost, id: string }> {
   type = ActionTypes.LikePost;
-  constructor(public payload: { post:IPost, id: string }) {}
+  constructor(public payload: { post: IPost, id: string }) { }
 }
 
 export class LikePostSuccess implements IAction<null> {
   type = ActionTypes.LikePostSuccess;
-  constructor(public payload: null = null) {}
+  constructor(public payload: null = null) { }
 }
 
 export class LikePostFailed implements IAction<{ error: any }> {
   type = ActionTypes.LikePostFailed;
-  constructor(public payload: { error: any }) {}
+  constructor(public payload: { error: any }) { }
 }
 
 export type Actions = CreatePost

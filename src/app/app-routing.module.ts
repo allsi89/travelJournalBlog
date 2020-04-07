@@ -5,7 +5,6 @@ import { RegisterComponent } from './auth/register/register.component';
 import { HomeComponent } from './home/home/home.component';
 import { CreateComponent } from './post/create/create.component';
 import { InfoComponent } from './post/info/info.component';
-import { PostInfoResolver } from './core/resolvers/post-info.resolver';
 import { AuthGuard } from './core/guards/auth.guard';
 import { NotAuthGuard } from './core/guards/not-auth.guard';
 import { UserPostsComponent } from './post/user-posts/user-posts.component';
@@ -29,7 +28,7 @@ const routes: Routes = [
     path: 'post', children:[
       { path: 'list', component: ListComponent},
       { path: 'create', component: CreateComponent, canActivate: [AuthGuard] },
-      { path: 'info/:id', component: InfoComponent, resolve: { post: PostInfoResolver }, canActivate: [AuthGuard] }
+      { path: 'info/:id', component: InfoComponent, canActivate: [AuthGuard] }
     ]
   },
   { path: '404',  component: NotFoundComponent },
@@ -43,6 +42,5 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
   declarations: [],
-  providers: [PostInfoResolver]
 })
 export class AppRoutingModule { }

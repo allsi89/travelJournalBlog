@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { IAppState } from './+store';
-import { Logout } from './+store/auth/actions';
-import { UserPosts } from './+store/post/actions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -12,13 +9,9 @@ import { UserPosts } from './+store/post/actions';
 export class AppComponent {
   title = 'travelJournalBlog';
 
-  constructor( private store: Store<IAppState> ) { }
+  constructor( private router: Router ) { }
 
-  logout() {
-    this.store.dispatch(new Logout())
-  }
-
-  getUserPosts(){
-    this.store.dispatch(new UserPosts(null));
+  ngOnInit(){
+    this.router.navigate([''])
   }
 }

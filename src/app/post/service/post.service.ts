@@ -72,7 +72,9 @@ export class PostService {
       text: data.text,
       imgUrl: data.url
     };
-    return this.fireDb.collection<IPost>('posts').add(post);
+
+    return this.fireDb.collection<IPost>('posts')
+      .add(post);
   }
 
   likePost(post: IPost, id: string) {

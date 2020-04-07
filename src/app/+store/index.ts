@@ -30,6 +30,8 @@ export const getUploadUrl = createSelector(getUploadStore, upload.getUploadUrl);
 
 /* Post Selectors */
 export const getPostStore = createFeatureSelector('post');
+export const getPostInfoSelector = createSelector(getPostStore, post.getPostInfo);
+export const getCreatedPostIdSelector = createSelector(getPostStore, post.getCreatedPostId);
 export const getAllPostsSelector = createSelector(getPostStore, post.getAllPosts);
 export const getUserPostsSelector = createSelector(getPostStore, post.getUserPosts);
 export const getUserByPostsSelector = createSelector(getPostStore, post.getUserByPosts);

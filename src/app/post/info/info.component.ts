@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute} from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { IPost } from 'src/app/core/interfaces/post';
 import { IUser } from 'src/app/core/interfaces/user';
 import { AuthService } from 'src/app/auth/service/auth.service';
-import { IAppState } from 'src/app/+store';
+import { IAppState, getPostInfoSelector } from 'src/app/+store';
 import { Store } from '@ngrx/store';
-import { DeletePost, LikePost, UserPosts} from 'src/app/+store/post/actions';
+import { DeletePost, LikePost, UserPosts, PostInfo } from 'src/app/+store/post/actions';
 
 @Component({
   selector: 'app-post-info',
@@ -13,10 +13,9 @@ import { DeletePost, LikePost, UserPosts} from 'src/app/+store/post/actions';
   styleUrls: ['./info.component.scss']
 })
 export class InfoComponent implements OnInit {
-  postId: string;
   post: IPost;
-  private _userData: IUser;
-  isAuthor$: boolean;
+  private userData: IUser;
+  isAuthor: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -25,15 +24,18 @@ export class InfoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.post = this.route.snapshot.data['post'];
-    this._userData = this.authService.userData;
-    this.isAuthor$ = this._userData.id == this.post.uid;
+    const id = this.route.snapshot.params.id;
+    // this.store.dispatch(new PostInfo({id}));
+    this.userData = this.authService.userData;
+    this.store.select(getPostInfoSelector)
+    .subscribe(data => {
+      this.post = data;
+      this.isAuthor = this.userData.id == data.uid;
+    }, err => console.error(err));
   }
 
-  likePost(post) {
-    if(!this.post.likes.includes(this._userData.id)) {
-      this.store.dispatch(new LikePost({ post, id: this._userData.id }));
-    }
+  likePost() {
+    this.store.dispatch(new LikePost({post: this.post, id: this.userData.id }));
   }
 
   deletePost(post) {

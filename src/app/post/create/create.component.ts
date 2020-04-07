@@ -3,10 +3,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { Image } from 'src/app/core/interfaces/image';
 import { IPost } from 'src/app/core/interfaces/post';
-import { IAppState, getAuthUser, getUploadUrl } from 'src/app/+store';
+import { IAppState, getAuthUser, getUploadUrl, getCreatedPostIdSelector } from 'src/app/+store';
 import { Store } from '@ngrx/store';
 import { first, filter } from 'rxjs/operators';
-import { CreatePost } from 'src/app/+store/post/actions';
+import { CreatePost, PostInfo } from 'src/app/+store/post/actions';
 import { UploadFile } from 'src/app/+store/upload/actions';
 
 @Component({
@@ -61,10 +61,14 @@ export class CreateComponent implements OnInit {
           first())
         .subscribe(url => {
           const data = { user, url, title, text: this.formattedText };
-          this.store.dispatch(new CreatePost(data))
+          this.store.dispatch(new CreatePost(data));
+          this.store.select(getCreatedPostIdSelector)
+          .subscribe(id => {
+            this.store.dispatch(new PostInfo({id}))
+          }, error => console.log(error()));
         })
-    }, error => console.log(error()
-    ))
+    }, error => console.log(error()));
+
   }
 
   detectImage(event) {

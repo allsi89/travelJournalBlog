@@ -2,7 +2,8 @@
   <mat-card-header>
     <!-- title -->
     <mat-card-title>
-      <a class="title-link" routerLink="/post/info/{{post.id}}">{{post.title}}</a>
+      {{post.title}} 
+        <mat-icon matBadge={{post.likes.length}} color="pink">favorite</mat-icon>
     </mat-card-title>
     <!-- author -->
     <a class="author-link" routerLink="" (click)="getUserPosts(post)">{{post.author}}</a>
@@ -19,10 +20,7 @@
     [innerHtml]="(post.text.length> 100)? (post.text | slice:0:200)+'...':(post.text)"></mat-card-content>
   <!-- Actions -->
   <mat-card-actions fxLayoutGap="1em" fxLayoutAlign="end">
-    <button mat-fab (click)="likePost()" color="pink">
-      <mat-icon matBadge={{post.likes.length}} color="white">favorite</mat-icon>
-    </button>
-    <button mat-fab routerLink="/post/info/{{post.id}}" color="aqua">
+    <button mat-fab (click)="getPostInfo(post.id)" color="aqua">
       <mat-icon color="white">pageview</mat-icon>
     </button>
     <!-- Actions for post author when in user/posts page -->

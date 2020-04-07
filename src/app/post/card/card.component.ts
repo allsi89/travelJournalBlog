@@ -5,7 +5,7 @@ import { AuthService } from 'src/app/auth/service/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { IAppState } from 'src/app/+store';
 import { Store } from '@ngrx/store';
-import { DeletePost, LikePost, UserPosts } from 'src/app/+store/post/actions';
+import { DeletePost, UserPosts, PostInfo } from 'src/app/+store/post/actions';
 
 @Component({
   selector: 'app-card',
@@ -30,10 +30,6 @@ export class CardComponent implements OnInit {
     this.isAuthor$ = this.authService.userData.id == this.post.uid;
   }
 
-  likePost(){
-    this.store.dispatch(new LikePost({post: this.post, id: this._userData.id}));
-  }
-
   deletePost() {
     this.store.dispatch(new DeletePost(this.post));
   }
@@ -41,5 +37,9 @@ export class CardComponent implements OnInit {
   getUserPosts(post: IPost) {
     const user = { id: post.uid, username: post.author, email: null };
     this.store.dispatch(new UserPosts(user));
+  }
+
+  getPostInfo(id: string) {
+    this.store.dispatch(new PostInfo({id}));
   }
 }

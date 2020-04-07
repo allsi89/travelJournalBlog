@@ -6,7 +6,7 @@ import {
     AllPosts, AllPostsSuccess, AllPostsFailed,
     UserPosts, UserPostsSuccess, UserPostsFailed,
     DeletePost, DeletePostSuccess, DeletePostFailed,
-    LikePost, LikePostSuccess, LikePostFailed
+    LikePost, LikePostSuccess, LikePostFailed, PostInfo, PostInfoSuccess, PostInfoFailed
 } from './actions';
 import { Router } from '@angular/router';
 import { map, switchMap, catchError } from 'rxjs/operators';
@@ -31,9 +31,8 @@ export class PostEffects {
         switchMap(data => {
             return this.postService
                 .createPost(data)
-                .then(data => {
-                    this.router.navigate(['post/info', data.id])
-                    return new CreatePostSuccess()
+                .then((id) => {
+                    return new CreatePostSuccess(id);
                 })
                 .catch(err => {
                     this.snackbar.open(err.message, 'Undo', {
@@ -43,6 +42,22 @@ export class PostEffects {
                 })
         })
     );
+
+    /** Get Post Info */
+    @Effect() postInfo$ = this.actions$.pipe(
+        ofType<PostInfo>(ActionTypes.PostInfo),
+        map(data => data.payload.id),
+        switchMap(id => {
+          return this.postService.fetchPostById(id)
+          .pipe(
+            map(post => {
+               this.router.navigate(['post/info', post.id])
+               return new PostInfoSuccess(post)
+            }),
+            catchError(err => [new PostInfoFailed({ error: err })])
+          );
+        })
+      );
 
     /** Get All Posts */
     @Effect() getAllPosts$ = this.actions$.pipe(
@@ -103,6 +118,7 @@ export class PostEffects {
         switchMap(({ post, id }) => {
             return this.postService.likePost(post, id)
                 .then(() => {
+                    this.router.navigate(['post/info', post.id])
                     return new LikePostSuccess();
                 })
                 .catch(err => [new LikePostFailed(err)]);

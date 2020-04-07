@@ -1,7 +1,5 @@
 <section>
-  <app-loader *ngIf="!post; else showData"></app-loader>
-  <ng-template #showData>
-  <div fxLayout="column" fxLayoutAlign="center center">
+  <div fxLayout="column" fxLayoutAlign="center center" >
     <!-- title -->
     <div class="header">
       <h1 class="post-title">{{post.title}}</h1>
@@ -13,7 +11,7 @@
     <br>
     <!-- author + date -->
     <div fxLayout="column" fxLayoutAlign="center center">
-      <a mat-button color="warn" class="author author-link" (click)="getUserPosts()">{{post.author}}</a>
+      <a mat-button color="warn" class="author author-link" (click)="getUserPosts(post.author)">{{post.author}}</a>
       <p class="post-date">{{post.createdOn | date: 'MMM d, y, hh:mm'}}</p>
     </div>
     <!-- post content -->
@@ -22,7 +20,7 @@
     <br>
 
     <!-- like button -->
-    <button mat-fab (click)="likePost(post)" color="pink">
+    <button mat-fab (click)="likePost()" color="pink">
       <mat-icon matBadge={{post.likes.length}} color="white">favorite</mat-icon>
     </button>
     <br>
@@ -37,6 +35,5 @@
         </button>
       </p>
   </ng-template>
-  <ng-container *ngIf="isAuthor$ then author;"></ng-container>
-</ng-template>
+  <ng-container *ngIf="isAuthor then author;"></ng-container>
 </section>
