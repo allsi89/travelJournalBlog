@@ -2,6 +2,47 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.1.
 
+
+Public parts: 
+- Home 
+- All Posts - two different views: 
+   1. Normal view, including all posts as cards
+   2. Table view, including brief information about all posts
+- User Posts
+- Login 
+- Regiser
+
+Private Parts:
+- Create Post
+- Delete Post
+- User Posts
+- Post Info
+- Like Post
+
+Functionalities:
+1. Completed:
+ - Create a post
+ - Delete own post 
+ - Upload Images for posts
+ - Like posts
+ - View posts by author
+ - Filter posts on All Posts Page/ Table view
+ - View Details Page for each post
+ - Form validations
+ 
+2. To be added:
+ - account settings: change password/username/email/profile picture/basic info, forgot password 
+ - profile page, including posts by the specific user plus profile public information
+ - share posts
+ - comment on posts
+ - notifications on own posts' comments
+ - edit post
+
+Providers used:
+- Angular FireStore: database + storage for images
+- Angular Material
+- ngRx store
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
