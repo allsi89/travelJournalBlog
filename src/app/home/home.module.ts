@@ -5,9 +5,7 @@ import { MaterialModule } from '../material.module';
 import { HomeComponent } from './home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CarouselComponent } from './carousel/carousel.component';
-
-
-
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [HomeComponent, 
@@ -17,7 +15,8 @@ import { CarouselComponent } from './carousel/carousel.component';
     CommonModule,
     FlexLayoutModule,
     MaterialModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    SharedModule
   ],
   schemas: [NO_ERRORS_SCHEMA],
 })

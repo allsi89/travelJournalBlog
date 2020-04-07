@@ -137,16 +137,16 @@ footer {
 
 }
 
-.title-div{
+.title-div {
   margin-top: 5%;
 }
 
 mat-sidenav {
   background-color: rgb(127, 81, 187) !important;
-  
+
 }
 
-main{
+main {
   margin-bottom: 100px;
 }
 
@@ -156,16 +156,53 @@ main{
 //   background-color: white;
 // }
 
-mat-sidenav-content{
+mat-sidenav-content {
   background-color: white;
   overflow: auto !important;
   max-height: 100vh;
 }
 
-mat-icon.success{
+mat-icon.success {
   color: teal;
 }
 
-mat-icon.accentB{
+mat-icon.accentB {
   color: rgb(20, 36, 184);
 }
+
+.mat-raised-button.mat-blue {
+  background-color: blue;
+  color: white;
+}
+
+.mat-icon.mat-white {
+  color: white;
+}
+
+.mat-raised-button.mat-green {
+  background-color: green;
+  color: white;
+}
+
+.mat-icon.mat-blue {
+  color: rgb(20, 36, 184);
+}
+
+.mat-card-header-text{
+  width: 100% !important;
+}
+
+.mat-fab.mat-pink {
+  background-color: rgb(240, 109, 229);
+  color: white;
+}
+
+.mat-fab.mat-aqua {
+  background-color: rgb(37, 160, 139);
+  color: white;
+}
+
+.mat-icon.mat-pink{
+  color: rgb(240, 109, 229);
+}
+

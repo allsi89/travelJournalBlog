@@ -3,14 +3,17 @@ import { CommonModule } from '@angular/common';
 import { ProfileComponent } from './profile/profile.component';
 import { SettingsComponent } from './settings/settings.component';
 import { NotificationsComponent } from './notifications/notifications.component';
-import { ArticlesComponent } from './articles/articles.component';
+import { MyFirebaseModule } from '../firebase.module';
+
 
 
 
 @NgModule({
-  declarations: [ProfileComponent, SettingsComponent, NotificationsComponent, ArticlesComponent],
+  declarations: [ProfileComponent, SettingsComponent, NotificationsComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    MyFirebaseModule,
+    // SharedModule 
   ]
 })
 export class UserModule { }

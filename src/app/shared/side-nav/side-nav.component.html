@@ -1,11 +1,17 @@
 <mat-nav-list>
     <div>
-        <a mat-list-item routerLink="/">Home</a>
-        <a mat-list-item routerLink="/post/all-posts">Posts</a>
-        <a *ngIf="isAuth" mat-list-item routerLink="/post/create">Create Post</a>
-        <a *ngIf="!isAuth" mat-list-item routerLink="/login">Login</a>
-        <a *ngIf="!isAuth" mat-list-item routerLink="/register">Register</a>
-        <a *ngIf="isAuth" mat-list-item routerLink="/user/profile">Profile</a>
-        <a *ngIf="isAuth" mat-list-item (click)='logout()'>Logout</a>
+        <a mat-list-item routerLink="/"><mat-icon matPrefix>home</mat-icon>Home</a>
+        <a mat-list-item routerLink="/post/list"><mat-icon matPrefix>dashboard</mat-icon>Posts</a>
+        <ng-template #notAuth>
+            <a mat-list-item routerLink="/login"><mat-icon matPrefix>verified_user</mat-icon>Login</a>
+            <a mat-list-item routerLink="/register"><mat-icon matPrefix>assignment_ind</mat-icon>Register</a>
+        </ng-template>
+        <ng-template #auth>
+            <a  mat-list-item routerLink="/post/create"><mat-icon matPrefix>edit</mat-icon>Create</a>
+            <a  mat-list-item (click)="getUserPosts()"><mat-icon matPrefix>folder_open</mat-icon>My journal</a>
+            <!-- <a *ngIf="isAuth" mat-list-item routerLink="/user/profile">Profile</a> -->
+            <a  mat-list-item (click)="logout()"><mat-icon matPrefix>power_settings_new</mat-icon>Logout</a>
+        </ng-template>
+        <ng-container *ngIf="(isAuth$ | async) then auth; else notAuth"></ng-container>
     </div>
 </mat-nav-list>

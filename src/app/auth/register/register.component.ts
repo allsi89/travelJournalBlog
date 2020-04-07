@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl, FormGroupDirective, NgForm} from '@angular/forms';
+import { FormGroup, FormBuilder, Validators} from '@angular/forms';
 import { errorMsgs, PasswordValidator } from './custom-validation';
-import { AuthService } from 'src/app/core/services/auth.service';
+import { Store } from '@ngrx/store';
+import { IAppState } from 'src/app/+store';
+import { Register } from 'src/app/+store/auth/actions';
 
 @Component({
   selector: 'app-register',
@@ -15,7 +17,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService
+    private store: Store<IAppState>
   ) { }
 
   ngOnInit() {
@@ -33,7 +35,6 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
-    const {email, password, username} = this.regForm.value;
-    this.authService.registerUser(email, password, username);
+    this.store.dispatch(new Register(this.regForm.value));
   }
 }

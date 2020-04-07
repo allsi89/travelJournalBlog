@@ -1,33 +1,27 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AuthService } from 'src/app/core/services/auth.service';
-import { Subscription } from 'rxjs';
+import { Component, Output, EventEmitter } from '@angular/core';
+import { IAppState, getIsAuthenticated } from 'src/app/+store';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-side-nav',
   templateUrl: './side-nav.component.html',
   styleUrls: ['./side-nav.component.scss']
 })
-export class SideNavComponent implements OnInit, OnDestroy {
+export class SideNavComponent {
+  @Output() onLogout = new EventEmitter<void>();
+  @Output() onGetUserPosts = new EventEmitter<void>();
+  isAuth$: Observable<boolean>;
 
-  isAuth: boolean = false;
-  isAuthSub: Subscription;
- 
-  constructor(
-    private authService: AuthService,
-    
-  ) { }
-
-  ngOnInit(): void {
-    this.isAuthSub = this.authService.isAuthChanged.subscribe((data) => {
-      this.isAuth = data;
-    })
+  constructor( private store: Store<IAppState> ) {
+    this.isAuth$ = this.store.select(getIsAuthenticated);
   }
 
-  ngOnDestroy() {
-    this.isAuthSub.unsubscribe();
+  getUserPosts(){
+    this.onGetUserPosts.emit();
   }
 
   logout() {
-    this.authService.logout()
+    this.onLogout.emit();
   }
 }

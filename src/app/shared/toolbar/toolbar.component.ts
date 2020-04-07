@@ -1,36 +1,32 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { AuthService } from 'src/app/core/services/auth.service';
-import { Subscription } from 'rxjs';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { IAppState, getIsAuthenticated } from 'src/app/+store';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss']
 })
-export class ToolbarComponent implements OnInit {
+export class ToolbarComponent {
   @Output() onToggleSidenav = new EventEmitter<void>();
-  isAuth: boolean = false;
-  isAuthSub: Subscription;
+  @Output() onLogout = new EventEmitter<void>();
+  @Output() onGetUserPosts = new EventEmitter<void>();
+  isAuth$: Observable<boolean>;
 
-  constructor(
-    private authService: AuthService
-  ) { }
+  constructor( private store: Store<IAppState> ) {
+    this.isAuth$ = this.store.select(getIsAuthenticated);
+  }
 
-  ngOnInit(): void {
-    this.isAuthSub = this.authService.isAuthChanged.subscribe((data) => {
-      this.isAuth = data;
-    })
-  }
-  
-  ngOnDestroy() {
-    this.isAuthSub.unsubscribe();
-  }
-  
   logout() {
-    this.authService.logout()
+    this.onLogout.emit();
   }
 
   toggleSidenav() {
     this.onToggleSidenav.emit();
+  }
+
+  getUserPosts(){
+    this.onGetUserPosts.emit();
   }
 }

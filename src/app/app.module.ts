@@ -5,17 +5,19 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from './material.module';
-// import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 import { AuthModule } from './auth/auth.module';
-import { AuthGuard } from './core/guards/auth.guard';
 import { HomeModule } from './home/home.module';
 import { PostsModule } from './post/post.module';
-
-
-
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { AuthEffects } from './+store/auth/effects';
+import { reducers } from './+store';
+import { StoreDevtoolsModule } from "@ngrx/store-devtools";
+import { PostEffects } from './+store/post/effects';
+import { UploadEffects } from './+store/upload/effects';
 
 @NgModule({
   declarations: [
@@ -29,19 +31,15 @@ import { PostsModule } from './post/post.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
-    // NgbModule,
     FlexLayoutModule,
     AuthModule,
     HomeModule,
     PostsModule,
-    // AngularFireStorageModule
-
-
-
+    EffectsModule.forRoot([AuthEffects, PostEffects, UploadEffects]),
+    StoreModule.forRoot(reducers),
+    StoreDevtoolsModule.instrument({})
   ],
-  schemas:[NO_ERRORS_SCHEMA],
-  providers: [AuthGuard],
+  schemas: [NO_ERRORS_SCHEMA],
   bootstrap: [AppComponent],
- 
 })
 export class AppModule { }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component} from '@angular/core';
 
 
 @Component({
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
   public slides = [
     {src: "assets/images/1.jpg"},
     {src: "assets/images/2.jpg"},
@@ -21,8 +21,4 @@ export class HomeComponent implements OnInit {
   ]
  
   constructor() { }
-
-  ngOnInit(): void {
-    console.log(this.slides.length)
-  }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, AfterViewInit, OnDestroy } from '@angular/core';
-import { trigger, transition, style, animate, useAnimation } from '@angular/animations';
+import { trigger, transition, useAnimation } from '@angular/animations';
 import { fadeIn, fadeOut} from "./carousel.animations";
 import { Subscription, timer } from 'rxjs';
 

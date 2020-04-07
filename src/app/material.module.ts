@@ -8,25 +8,27 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatBadgeModule } from '@angular/material/badge';
-import {MatRadioModule} from '@angular/material/radio';
-
-// import { MatSnackBar } from '@angular/material/snack-bar';
-// import {MatExpansionModule} from '@angular/material/expansion';
-
+import { MatRadioModule } from '@angular/material/radio';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatTableModule} from '@angular/material/table';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTabsModule} from '@angular/material/tabs';
 
 const modules = [
   MatToolbarModule,
-    MatIconModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatListModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatCardModule,
-    MatBadgeModule,
-    MatRadioModule
-    // MatSnackBar
-    // MatExpansionModule
+  MatIconModule,
+  MatButtonModule,
+  MatSidenavModule,
+  MatListModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatCardModule,
+  MatBadgeModule,
+  MatRadioModule,
+  MatMenuModule,
+  MatSnackBarModule,
+  MatTableModule,
+  MatTabsModule,
 ]
 
 @NgModule({

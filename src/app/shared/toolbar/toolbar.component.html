@@ -5,31 +5,19 @@
       Travel Journal
     </span>
   </button>
-  <div fxFlex fxShow="true" fxHide.lt-md="true">
-    <ul class="pTFixed" fxFlex fxLayout fxLayoutAlign="flex-end" fxLayoutGap="15px">
-      <li>
-        <a routerLink="/">Home</a>
-      </li>
-      <li>
-        <a routerLink="/post/all-posts">Posts</a>
-      </li>
-      <li>
-        <a *ngIf="isAuth" routerLink="/post/create">Create Post</a>
-      </li>
-      <li *ngIf="!isAuth">
-        <a routerLink="/login">Login</a>
-      </li>
-      <li *ngIf="!isAuth">
-        <a routerLink="/register">Register</a>
-      </li>
-      <li *ngIf="isAuth">
-        <a routerLink="/user/profile">
-          <mat-icon matPrefix>account_circle</mat-icon>Profile
-        </a>
-      </li>
-      <li *ngIf="isAuth">
-        <a (click)="logout()">LogOut</a>
-      </li>
-    </ul>
+  <div fxFlex fxShow="true" fxHide.lt-md="true" class="pTFixed" fxFlex fxLayout fxLayoutAlign="flex-end" fxLayoutGap="15px">
+    <a routerLink="/"><mat-icon matPrefix>home</mat-icon>Home</a>
+    <a routerLink="/post/list"><mat-icon matPrefix>dashboard</mat-icon>Posts</a>
+    <ng-template #notAuth>
+      <a routerLink="/login"><mat-icon matPrefix>verified_user</mat-icon>Login</a>
+      <a routerLink="/register"><mat-icon matPrefix>assignment_ind</mat-icon>Register</a>
+    </ng-template>
+    <ng-template #auth>
+      <a routerLink="/post/create"><mat-icon matPrefix>edit</mat-icon>Create</a>
+      <a (click)="getUserPosts()"><mat-icon matPrefix>folder_open</mat-icon>My journal</a>
+      <a (click)="logout()"><mat-icon matPrefix>power_settings_new</mat-icon>Logout</a>
+    </ng-template>
+    <ng-container *ngIf="(isAuth$ | async) then auth; else notAuth"></ng-container>
   </div>
+ 
 </mat-toolbar>

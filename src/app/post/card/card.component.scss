@@ -1,0 +1,60 @@
+.material-icons {
+  vertical-align: middle;
+  font-size: 22px;
+  background-color: none;
+}
+
+mat-card {
+  width: 600px;
+
+}
+
+p {
+  margin-left: 0;
+  margin-right: 20px;
+  margin-top: 80px;
+}
+
+.mat-radio-button~.mat-radio-button {
+  margin-left: 16px;
+}
+
+.margin {
+  margin-right: 12px;
+}
+
+mat-card {
+  background-color: rgb(221, 220, 220);
+}
+
+a.title-link:visited,
+a.title-link:link {
+  color: rgb(18, 113, 168);
+  text-decoration: none;
+  font-size: 22px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-style: italic;
+}
+
+a.title-link:hover {
+  color: rgb(212, 121, 17);
+  // background-color: rgb(233, 233, 142)
+}
+
+a.author-link:visited,
+a.author-link:link {
+  color: rgb(133, 18, 168);
+  text-decoration: none;
+  font-size: 22px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+a.author-link:hover {
+  color: rgb(62, 160, 173);
+  // background-color: rgb(233, 233, 142)
+}
+
+
+.card-text {
+  width: 100%;
+}

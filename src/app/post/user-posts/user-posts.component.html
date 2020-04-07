@@ -1,0 +1,8 @@
+<section fxFlex fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="2em">
+    <div class="header">
+      <h1 class="page-title-h">Posts by {{user$.username}}</h1>
+    </div>
+    
+    <app-card *ngFor="let post of postList$ | async" [post]="post"></app-card>
+  </section>
+  

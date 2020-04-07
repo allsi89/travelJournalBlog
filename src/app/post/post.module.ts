@@ -7,21 +7,30 @@ import { MyFirebaseModule } from '../firebase.module';
 import { CreateComponent } from './create/create.component';
 import { EditComponent } from './edit/edit.component';
 import { InfoComponent } from './info/info.component';
-import { AllComponent } from './all/all.component';
-import { PostsService } from '../core/services/posts.service';
+import { PostService } from './service/post.service';
+import { UploadService } from '../core/services/upload.service';
+import { CardComponent } from './card/card.component';
+import { SharedModule } from '../shared/shared.module';
+import { RouterModule } from '@angular/router';
+import { UserPostsComponent } from './user-posts/user-posts.component';
+import { ListComponent } from './list/list.component';
+import { TableComponent } from './table/table.component';
 
 @NgModule({
-  declarations: [CreateComponent, EditComponent, InfoComponent, AllComponent],
+  declarations: [CreateComponent, EditComponent, InfoComponent, CardComponent, UserPostsComponent, ListComponent, TableComponent],
   imports: [
     CommonModule,
     MaterialModule,
     FlexLayoutModule,
     ReactiveFormsModule,
     MyFirebaseModule,
+    SharedModule,
+    RouterModule
+
   ],
   schemas: [NO_ERRORS_SCHEMA],
   providers: [
-    PostsService
+    PostService, UploadService
   ]
 })
 export class PostsModule { }
