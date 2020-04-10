@@ -12,9 +12,9 @@ export class UploadFile implements IAction<File> {
     constructor(public payload: File) { }
 }
 
-export class UploadFileSuccess implements IAction<string> {
+export class UploadFileSuccess implements IAction<{url: string, name: string}> {
     type = ActionTypes.UploadFileSuccess;
-    constructor(public payload: string) { }
+    constructor(public payload: {url: string, name: string}) { }
 }
 
 export class UploadFileFailed implements IAction<{ error: any }> {

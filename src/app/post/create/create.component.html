@@ -6,11 +6,11 @@
         </div>
 
         <label>Image</label>
-        <input type="file" (change)="detectImage($event)" accept=".png,.jpg" />
+        <input type="file" formControlName="image" (change)="detectImage($event)" accept=".png,.jpg" #image/>
         <mat-hint>Please select an image. Allowed types are .png and .jpg.</mat-hint>
         <p>
             <mat-form-field hintLabel="Title must be between 6 and 150 characters" appearance="outline">
-                <textarea formControlName="title" matInput type="text" placeholder="Title" #title maxlength="150"
+                <textarea formControlName="title" formControlName="title" matInput type="text" placeholder="Title" #title maxlength="150"
                     rows="3"></textarea>
                 <mat-icon matSuffix>mode_edit</mat-icon>
                 <mat-hint align="end">{{title.value?.length || 0}}/150</mat-hint>

@@ -1,9 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { IPost } from 'src/app/core/interfaces/post';
 import { MatTableDataSource } from '@angular/material/table';
-import { Store } from '@ngrx/store';
-import { IAppState } from 'src/app/+store';
-import { UserPosts, PostInfo } from 'src/app/+store/post/actions';
+import { HelperService } from 'src/app/core/services/helper.service';
+import { NavService } from 'src/app/core/services/nav.service';
 
 @Component({
   selector: 'app-table',
@@ -16,15 +15,17 @@ export class TableComponent implements OnInit {
   displayedColumns: string[] = ['createdOn', 'title', 'author'];
   dataSource: MatTableDataSource<IPost>;
 
-  constructor(private store: Store<IAppState>) { }
+  constructor(
+    private helper: HelperService,
+    private navService: NavService
+    ) { }
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource(this.postList);
   }
 
   getUserPosts(post: IPost) {
-    const user = { id: post.uid, username: post.author, email: null };
-    this.store.dispatch(new UserPosts(user));
+    this.helper.getUserPosts(post);
   }
 
   applyFilter(event: Event) {
@@ -33,6 +34,6 @@ export class TableComponent implements OnInit {
   }
 
   getPostInfo(id: string) {
-    this.store.dispatch(new PostInfo({id}));
+    this.navService.getPostInfo(id);
   }
 }

@@ -28,19 +28,31 @@ export class UploadService {
       .then(data => {
         return data.ref.getDownloadURL()
           .then(url => {
-            return url;
+            return {url, name};
           })
       });
   }
 
-  deleteImg(imgUrl: string) {
-    if (!imgUrl) {
+  deleteImg(imgName: string) {
+    if (!imgName) {
       return;
     }
-   return this.fbs.storage
-      .refFromURL(imgUrl)
-      .delete()
-      .catch(err => console.error(err));
+    return this.fbs.storage
+    .ref()
+    .child(`${this.path}/${imgName}`)
+    .delete()
+    .then(res=> {
+      console.log(res)
+    })
+    .catch(err => console.error(err.message));
+
+  //  return this.fbs.storage
+  //     .refFromURL(imgUrl)
+  //     .delete()
+  //     .then(res=> {
+  //       console.log(res)
+  //     })
+  //     .catch(err => console.error(err.message));
   }
 
 }

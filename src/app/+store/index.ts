@@ -26,7 +26,7 @@ export const getIsAuthenticated = createSelector(getAuthUser, user => !!user );
 
 /* Upload Selectors */
 export const getUploadStore = createFeatureSelector('upload');
-export const getUploadUrl = createSelector(getUploadStore, upload.getUploadUrl);
+export const UploadDataSelector = createSelector(getUploadStore, upload.getUploadData);
 
 /* Post Selectors */
 export const getPostStore = createFeatureSelector('post');

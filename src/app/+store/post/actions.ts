@@ -20,8 +20,11 @@ export const ActionTypes = {
   DeletePostFailed: "[POST] Delete Post Failed",
   LikePost: "[POST] Like Post",
   LikePostSuccess: "[POST] Like PostSuccess",
-  LikePostFailed: "[POST] Like Post Failed"
-
+  LikePostFailed: "[POST] Like Post Failed",
+  SetUserByPosts: "[POST] Set User By Posts",
+  PostAuth: "[POST] Req Post Auth",
+  PostAuthSuccess: "[POST] Req Post Auth Success",
+  PostAuthFailed: "[POST] Req Post Auth Failed"
 };
 
 /** Create Post */
@@ -88,6 +91,22 @@ export class UserPostsFailed implements IAction<{ error: any }> {
   constructor(public payload: { error: any }) { }
 }
 
+/**Post Auth */
+export class PostAuth implements IAction<IPost> {
+  type = ActionTypes.PostAuth;
+  constructor(public payload: IPost) { }
+}
+
+export class PostAuthSuccess implements IAction<null> {
+  type = ActionTypes.PostAuthSuccess;
+  constructor(public payload: null = null) { }
+}
+
+export class PostAuthFailed implements IAction<null> {
+  type = ActionTypes.PostAuthFailed;
+  constructor(public payload: null = null) { }
+}
+
 /** Delete Post */
 export class DeletePost implements IAction<IPost> {
   type = ActionTypes.DeletePost;
@@ -120,6 +139,12 @@ export class LikePostFailed implements IAction<{ error: any }> {
   constructor(public payload: { error: any }) { }
 }
 
+/** Set userByPosts */
+export class SetUserByPosts implements IAction<{ id: string, username: string }> {
+  type = ActionTypes.SetUserByPosts;
+  constructor(public payload: { id: string, username: string }) { }
+}
+
 export type Actions = CreatePost
   | CreatePostSuccess
   | CreatePostFailed
@@ -134,5 +159,10 @@ export type Actions = CreatePost
   | DeletePostFailed
   | LikePost
   | LikePostSuccess
-  | LikePostFailed;
+  | LikePostFailed
+  | SetUserByPosts
+  | PostAuth
+  | PostAuthSuccess
+  | PostAuthFailed;
+
 

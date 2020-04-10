@@ -6,5 +6,6 @@ export interface IPost{
     likes: Array<string>,
     title: string,
     text: string,
-    imgUrl: string
+    imgUrl: string,
+    imgName: string
 }

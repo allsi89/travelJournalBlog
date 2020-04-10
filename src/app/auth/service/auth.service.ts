@@ -18,8 +18,8 @@ export class AuthService {
   ) { 
     this.store.select(getAuthUser)
     .subscribe(user => {
-      this._userData = user ? {id:user.userId, username:user.username, email:null} : null;
-    }, error => console.log(error()))
+      this._userData = user ? {id: user.userId, username: user.username, email: null} : null;
+    }, error => console.error(error()))
   }
 
   /* Register user => adds username as display name in FB auth */

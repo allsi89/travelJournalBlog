@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IPost } from 'src/app/core/interfaces/post';
-import { IUser } from 'src/app/core/interfaces/user';
-import { AuthService } from 'src/app/auth/service/auth.service';
 import { IAppState, getPostInfoSelector } from 'src/app/+store';
-import { Store } from '@ngrx/store';
-import { DeletePost, LikePost, UserPosts, PostInfo } from 'src/app/+store/post/actions';
+import { Store, ActionsSubject } from '@ngrx/store';
+import { PostInfo, ActionTypes } from 'src/app/+store/post/actions';
+import { Observable } from 'rxjs';
+import { ofType } from '@ngrx/effects';
 
 @Component({
   selector: 'app-post-info',
@@ -13,37 +13,24 @@ import { DeletePost, LikePost, UserPosts, PostInfo } from 'src/app/+store/post/a
   styleUrls: ['./info.component.scss']
 })
 export class InfoComponent implements OnInit {
-  post: IPost;
-  private userData: IUser;
-  isAuthor: boolean;
+  post: Observable<IPost>;
+  loaded: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
-    private authService: AuthService,
-    private store: Store<IAppState>
+    private store: Store<IAppState>,
+    private actionSubject: ActionsSubject
   ) { }
 
   ngOnInit() {
-    const id = this.route.snapshot.params.id;
-    // this.store.dispatch(new PostInfo({id}));
-    this.userData = this.authService.userData;
-    this.store.select(getPostInfoSelector)
-    .subscribe(data => {
-      this.post = data;
-      this.isAuthor = this.userData.id == data.uid;
-    }, err => console.error(err));
-  }
-
-  likePost() {
-    this.store.dispatch(new LikePost({post: this.post, id: this.userData.id }));
-  }
-
-  deletePost(post) {
-    this.store.dispatch(new DeletePost(post));
-  }
-
-  getUserPosts() {
-    const user = { id: this.post.uid, username: this.post.author, email: null };
-    this.store.dispatch(new UserPosts(user));
+    const id = this.route.snapshot.paramMap.get('id');
+    this.store.dispatch(new PostInfo({ id }));
+    this.actionSubject.pipe(
+      ofType(ActionTypes.PostInfoSuccess)
+    ).subscribe(() => {
+      this.post = this.store.select(getPostInfoSelector);
+      this.post.subscribe;
+      this.loaded = true;
+    })
   }
 }

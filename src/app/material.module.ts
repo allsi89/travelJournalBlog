@@ -13,6 +13,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule} from '@angular/material/table';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTabsModule} from '@angular/material/tabs';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 const modules = [
   MatToolbarModule,
@@ -29,6 +30,7 @@ const modules = [
   MatSnackBarModule,
   MatTableModule,
   MatTabsModule,
+  MatProgressSpinnerModule
 ]
 
 @NgModule({

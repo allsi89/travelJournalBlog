@@ -1,16 +1,21 @@
 <section>
-    <div class="header" fxLayoutAlign="center center">
-        <h1 class="page-title-h">Posts</h1>
+    <div *ngIf="!loaded; else showContent" fxLayoutAlign="center center" class="center">
+        <mat-spinner></mat-spinner>
     </div>
-    <div fxLayoutAlign="center center" class="header">
-        <button mat-raised-button color="green" (click)="toggle()">{{buttonName}}</button>
-    </div>
-    <ng-container *ngIf="cardView; else tableView">
-        <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="2em">
-            <app-card *ngFor="let post of postList$ | async" [post]="post"></app-card>
+    <ng-template #showContent>
+        <div class="header" fxLayoutAlign="center center">
+            <h1 class="page-title-h">Posts</h1>
         </div>
-    </ng-container>
-    <ng-template #tableView>
-        <app-table [postList]="postList$ | async"></app-table>
+        <div fxLayoutAlign="center center" class="header">
+            <button mat-raised-button color="green" (click)="toggle()">{{buttonName}}</button>
+        </div>
+        <ng-container *ngIf="cardView; else tableView">
+            <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="2em">
+                <app-card *ngFor="let post of postList$ | async" [post]="post"></app-card>
+            </div>
+        </ng-container>
+        <ng-template #tableView>
+            <app-table [postList]="postList$ | async"></app-table>
+        </ng-template>
     </ng-template>
 </section>

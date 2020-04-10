@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { IPost } from '../../core/interfaces/post';
 import { UploadService } from '../../core/services/upload.service';
 import { AuthService } from 'src/app/auth/service/auth.service';
@@ -13,6 +13,7 @@ import 'firebase/firestore';
   providedIn: 'root'
 })
 export class PostService {
+  
 
   constructor(
     private fireDb: AngularFirestore,
@@ -37,14 +38,22 @@ export class PostService {
       )
   }
 
+  requestPostAuth(post: IPost) {
+    if(this.authService.userData.id == post.uid) {
+      return true;
+    } 
+    return false;
+  }
+
   fetchPostById(postId: string): Observable<IPost> {
+
     return this.fireDb
       .collection<IPost>('posts')
       .doc(postId)
       .snapshotChanges()
       .pipe(
         map(p => {
-          return this.mappedObj(p.payload)
+          return this.mappedObj(p.payload);
         })
       );
   }
@@ -64,17 +73,20 @@ export class PostService {
 
   createPost(data) {
     const post: IPost = {
-      author: data.user.username,
-      uid: data.user.userId,
+      author: data.author,
+      uid: data.uid,
       createdOn: new Date(),
       likes: [],
       title: data.title,
       text: data.text,
-      imgUrl: data.url
+      imgUrl: data.url,
+      imgName: data.imgName
     };
 
     return this.fireDb.collection<IPost>('posts')
-      .add(post);
+      .add(post).then(data => {
+        return data.get().then(res => res.id)
+      });
   }
 
   likePost(post: IPost, id: string) {
@@ -91,13 +103,13 @@ export class PostService {
   }
 
   deletePost(post: IPost) {
-    this.fireDb
+    return this.uploadService.deleteImg(post.imgName)
+    .then(() => {
+      this.fireDb
       .collection<IPost>('posts')
       .doc(post.id)
-      .delete()
-      .catch(err => console.error(err));
-
-    return this.uploadService.deleteImg(post.imgUrl);
+      .delete();
+    });
   }
 
   private mappedObj(o) {

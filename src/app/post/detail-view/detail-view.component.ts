@@ -1,49 +1,48 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { IPost } from 'src/app/core/interfaces/post';
 import { IUser } from 'src/app/core/interfaces/user';
-import { ActivatedRoute } from '@angular/router';
+import { IAppState } from 'src/app/+store';
+import { Store } from '@ngrx/store';
+import { LikePost } from 'src/app/+store/post/actions';
 import { HelperService } from 'src/app/core/services/helper.service';
 import { NavService } from 'src/app/core/services/nav.service';
 
 @Component({
-  selector: 'app-card',
-  templateUrl: './card.component.html',
-  styleUrls: ['./card.component.scss']
+  selector: 'app-detail-view',
+  templateUrl: './detail-view.component.html',
+  styleUrls: ['./detail-view.component.scss']
 })
-export class CardComponent implements OnInit {
+export class DetailViewComponent implements OnInit {
   @Input() post: IPost;
-  private _userData: IUser;
-  isUPostPage$: boolean;
-  isAuthor$: boolean = false;
+  userData$: IUser;
 
   constructor(
-    private route: ActivatedRoute,
+    private store: Store<IAppState>,
     private helper: HelperService,
     private navService: NavService
   ) { }
 
   ngOnInit(): void {
-    this._userData = this.helper.getCurrentUser();
-    this.isUPostPage$ = this.route.snapshot.parent.url[0].path == 'user';
-    if(this._userData) {
-      this.isAuthor$ = this._userData.id == this.post.uid;
-    }
+    this.userData$ = this.helper.getCurrentUser();
   }
 
   deletePost() {
     this.helper.deletePost(this.post);
   }
 
-  getUserPosts(post: IPost) {
-    this.helper.getUserPosts(post);
+  getUserPosts() {
+    this.helper.getUserPosts(this.post);
   }
 
   getPostInfo(id: string) {
     this.navService.getPostInfo(id);
-    
   }
 
   getEditPost(id: string) {
     this.navService.getPostEdit(id);
+  }
+
+  likePost() {
+    this.store.dispatch(new LikePost({ post: this.post, id: this.userData$.id }));
   }
 }
