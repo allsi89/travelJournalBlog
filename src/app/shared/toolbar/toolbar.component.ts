@@ -5,7 +5,8 @@ import { Observable } from 'rxjs';
 import { Logout } from 'src/app/+store/auth/actions';
 import { UserPosts } from 'src/app/+store/post/actions';
 import { AuthService } from 'src/app/auth/service/auth.service';
-import { Router } from '@angular/router';
+import { Navigator } from 'src/app/core/services/navigator.service';
+import { UserById } from 'src/app/+store/user/actions';
 
 @Component({
   selector: 'app-toolbar',
@@ -19,7 +20,7 @@ export class ToolbarComponent {
   constructor(
     private store: Store<IAppState>,
     private authService: AuthService,
-    private router: Router
+    private navigator: Navigator
   ) {
     this.isAuth$ = this.store.select(getIsAuthenticated);
   }
@@ -29,8 +30,7 @@ export class ToolbarComponent {
   }
 
   getUserPosts() {
-    this.store.dispatch(new UserPosts(this.authService.userData));
-    this.router.navigate(['user/my-journal']);
+    this.navigator.userJournal(this.authService.userData.id);
   }
 
   logout() {

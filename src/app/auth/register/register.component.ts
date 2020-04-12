@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators} from '@angular/forms';
 import { errorMsgs, PasswordValidator } from './custom-validation';
 import { Store } from '@ngrx/store';
 import { IAppState } from 'src/app/+store';
-import { Register } from 'src/app/+store/auth/actions';
+import { Register} from 'src/app/+store/auth/actions';
 
 @Component({
   selector: 'app-register',
@@ -21,7 +21,6 @@ export class RegisterComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
     this.regForm = this.fb.group({
       username: [null, [Validators.required, Validators.minLength(6), Validators.maxLength(20)]],
       email: [null, [Validators.required, Validators.email]],

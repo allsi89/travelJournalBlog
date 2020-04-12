@@ -1,0 +1,54 @@
+.example-card {
+    max-width: max-content;
+    margin-top: 5%;
+  }
+  
+  .example-header-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+  }
+  
+  .header {
+    margin-top: 5%;
+  }
+  
+  .post-title {
+    font-size: 30px;
+    font-style: italic;
+    font-family: 'Times New Roman', Times, serif;
+    color: purple;
+  }
+  
+  .author {
+    margin-top: 10px;
+    display: inline-flex;
+    vertical-align: middle;
+    font-size: 22px;
+    font-family: 'Times New Roman', Times, 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  }
+  
+  .post-date {
+    margin-top: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .material-icons {
+    vertical-align: middle;
+    font-size: 22px;
+    background-color: none;
+  }
+  
+  div.content > p {
+    text-indent: 50px;
+  }
+  .content {
+    width: 80%;
+    margin-top: 10px;
+    font-size: 22px;
+    font-family: 'Times New Roman', Times, 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: rgb(59, 91, 196);
+  }
+  
+  a.author-link:hover {
+    color: rgb(62, 160, 173);
+  }

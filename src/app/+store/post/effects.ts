@@ -6,13 +6,13 @@ import {
     AllPosts, AllPostsSuccess, AllPostsFailed,
     UserPosts, UserPostsSuccess, UserPostsFailed,
     DeletePost, DeletePostSuccess, DeletePostFailed,
-    LikePost, LikePostSuccess, LikePostFailed, PostInfo, 
-    PostInfoSuccess, PostInfoFailed, SetUserByPosts, PostAuth, PostAuthSuccess, PostAuthFailed, 
+    LikePost, LikePostSuccess, LikePostFailed,
+    PostInfo, PostInfoSuccess, PostInfoFailed,
 } from './actions';
-import { Router } from '@angular/router';
 import { map, switchMap, catchError } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PostService } from 'src/app/post/service/post.service';
+import { Navigator } from 'src/app/core/services/navigator.service';
 
 @Injectable({
     providedIn: 'root'
@@ -22,27 +22,27 @@ export class PostEffects {
         private actions$: Actions,
         private postService: PostService,
         private snackbar: MatSnackBar,
-        private router: Router,
+        private navigator: Navigator
     ) { }
 
     /** Create Post */
     @Effect() createPost$ = this.actions$.pipe(
         ofType<CreatePost>(ActionTypes.CreatePost),
         map(action => action.payload),
-        switchMap(data => {
+        switchMap((post) => {
             return this.postService
-                .createPost(data)
-                .then((id) => {
+                .createPost(post)
+                .then(() => {
                     this.snackbar.open('Successfully Created!', 'Close', {
                         duration: 4000
                     });
-                    return new CreatePostSuccess({ id });
+                    return new CreatePostSuccess();
                 })
                 .catch(err => {
                     this.snackbar.open(err.message, 'Close', {
                         duration: 4000
                     });
-                    return new CreatePostFailed(err);
+                    return new CreatePostFailed({ error: err });
                 })
         })
     );
@@ -50,44 +50,20 @@ export class PostEffects {
     /** Get Post Info */
     @Effect() postInfo$ = this.actions$.pipe(
         ofType<PostInfo>(ActionTypes.PostInfo),
-        map(data => data.payload.id),
-        switchMap(id => {
-            return this.postService.fetchPostById(id)
+        map(data => data.payload),
+        switchMap(({ userId, id }) => {
+            return this.postService.fetchPostById(userId, id)
                 .pipe(
                     map(post => {
-                        //    this.router.navigate(['post/info', post.id])
-                        return new PostInfoSuccess(post)
+                        return new PostInfoSuccess({post});
                     }),
                     catchError(err => {
-                        this.snackbar.open(err.message, 'Close', {
-                            duration: 4000
-                        });
-                        this.router.navigate(['post/journal']);
-                        return [new PostInfoFailed({ error: err })]
+                        this.navigator.postList();
+                        return [new PostInfoFailed({ error: err })];
                     })
                 );
         })
     );
-
-    @Effect() postAuth = this.actions$.pipe(
-        ofType<PostAuth>(ActionTypes.PostAuth),
-        map(data => data.payload),
-        map(post => {
-            const authorized = this.postService.requestPostAuth(post);
-            if(authorized){
-                
-                return new PostAuthSuccess();
-            } else {
-                this.snackbar.open('You are not authorized to perform this action!', 'Close', {
-                    duration: 4000
-                });
-                this.router.navigate(['post/journal']);
-                return [new PostAuthFailed()];
-            }
-        })
-
-    )
-
 
     /** Get All Posts */
     @Effect() getAllPosts$ = this.actions$.pipe(
@@ -101,7 +77,8 @@ export class PostEffects {
                     this.snackbar.open(err.message, 'Close', {
                         duration: 3000
                     });
-                    return [new AllPostsFailed(err)];
+                    this.navigator.home()
+                    return [new AllPostsFailed({ error: err })];
                 })
             );
         })
@@ -111,18 +88,16 @@ export class PostEffects {
     @Effect() getUserPosts$ = this.actions$.pipe(
         ofType<UserPosts>(ActionTypes.GetUserPosts),
         map(data => data.payload),
-        switchMap((user) => {
-            return this.postService.fetchUserPosts(user).pipe(
+        switchMap(userId => {
+            return this.postService.fetchUserPosts(userId).pipe(
                 map(posts => {
-                    localStorage.setItem('userByPosts', JSON.stringify(user));
-                    // this.router.navigate(['user/journal']);
-                    return new UserPostsSuccess(posts);
+                    return new UserPostsSuccess({ posts });
                 }),
                 catchError(err => {
-                    this.snackbar.open(err.message, 'Close', {
+                    this.snackbar.open(err.message + ' from get User Posts', 'Close', {
                         duration: 3000
                     });
-                    return [new UserPostsFailed(err)];
+                    return [new UserPostsFailed({ error: err })];
                 })
             );
         })
@@ -135,10 +110,16 @@ export class PostEffects {
         switchMap(post => {
             return this.postService.deletePost(post)
                 .then(() => {
-                    this.router.navigate(['user/my-journal'])
+
+                    // this.navigator.myJournal()
                     return new DeletePostSuccess();
                 })
-                .catch(err => [new DeletePostFailed(err)]);
+                .catch(err => {
+                    this.snackbar.open(err.message, 'Close', {
+                        duration: 3000
+                    });
+                    return [new DeletePostFailed({ error: err })]
+                });
         })
     );
 
@@ -149,21 +130,9 @@ export class PostEffects {
         switchMap(({ post, id }) => {
             return this.postService.likePost(post, id)
                 .then(() => {
-                    // this.router.navigate(['post/info', post.id])
                     return new LikePostSuccess();
                 })
-                .catch(err => [new LikePostFailed(err)]);
+                .catch(err => [new LikePostFailed({ error: err })]);
         })
     );
-
-    /** Init state, userByPosts in LS */
-    @Effect() init$ = this.actions$.pipe(
-        ofType('@ngrx/effects/init'),
-        switchMap(() => {
-            const user = JSON.parse(localStorage.getItem('userByPosts'));
-            if (!user) { return []; }
-            return [new SetUserByPosts(user), new UserPosts(user)];
-        })
-    );
-
 }

@@ -16,7 +16,7 @@ export class UploadService {
     private fbs: AngularFireStorage
   ) { }
 
-  uploadFile(file: File) {
+  uploadFile(file) {
     const randomId = Math.random().toString(36).substring(2);
     const name = randomId + file.name;
     const image = { file, name };
@@ -25,34 +25,39 @@ export class UploadService {
       .ref()
       .child(`${this.path}/${image.name}`)
       .put(image.file)
-      .then(data => {
-        return data.ref.getDownloadURL()
-          .then(url => {
-            return {url, name};
-          })
+      .then(data => data.ref.getDownloadURL())
+      .then(url => {
+        return {url, name};
       });
   }
 
-  deleteImg(imgName: string) {
-    if (!imgName) {
+  uploadData(data){
+    const post = data.post;
+    const file = data.file;
+    const randomId = Math.random().toString(36).substring(2);
+    const name = randomId + file.name;
+
+    const image = { file, name };
+
+    return this.fbs.storage
+      .ref()
+      .child(`${this.path}/${image.name}`)
+      .put(image.file)
+      .then(data => data.ref.getDownloadURL())
+      .then(url => {
+        post.imgUrl = url;
+        post.imgName = name;
+        return post;
+      });
+  }
+
+  deleteImg(imgUrl: string) {
+    if (!imgUrl) {
       return;
     }
     return this.fbs.storage
-    .ref()
-    .child(`${this.path}/${imgName}`)
-    .delete()
-    .then(res=> {
-      console.log(res)
-    })
-    .catch(err => console.error(err.message));
-
-  //  return this.fbs.storage
-  //     .refFromURL(imgUrl)
-  //     .delete()
-  //     .then(res=> {
-  //       console.log(res)
-  //     })
-  //     .catch(err => console.error(err.message));
+    .refFromURL(imgUrl)
+    .delete();
   }
 
 }

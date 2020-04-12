@@ -3,6 +3,51 @@
         <mat-spinner></mat-spinner>
     </div>
     <ng-template #showContent>
-        <app-detail-view [post]="post | async"></app-detail-view>
+        <!-- <app-detail-view [post]="post$ | async"></app-detail-view> -->
+
+        <div *ngIf="loading; else showContent" fxLayoutAlign="center center" class="center">
+            <mat-spinner></mat-spinner>
+            <p>deleting...</p>
+        </div>
+        <ng-template #showContent>
+            <div fxLayout="column" fxLayoutAlign="center center">
+                <!-- title -->
+                <div class="header">
+                    <h1 class="post-title">{{post.title}}</h1>
+                </div>
+                <!-- picture -->
+                <div>
+                    <img src={{post.imgUrl}} alt="Picture">
+                </div>
+                <br>
+                <!-- author + date -->
+                <div fxLayout="column" fxLayoutAlign="center center">
+                    <a mat-button color="warn" class="author author-link" (click)="getUserPosts()">{{post.author}}</a>
+                    <p class="post-date">{{post.createdOn | date: 'MMM d, y, hh:mm'}}</p>
+                </div>
+                <!-- post content -->
+                <div class="content" [innerHTML]="post.text | formatText">
+                </div>
+                <br>
+
+                <!-- like button -->
+                <button mat-fab (click)="likePost()" color="pink">
+                    <mat-icon matBadge={{post.likes.length}} color="white">favorite</mat-icon>
+                </button>
+                <br>
+            </div>
+
+            <ng-template #author>
+                <p fxLayoutGap="1em" fxLayoutAlign="end">
+                    <button mat-raised-button (click)="getEditPost(post.uid, post.id)" color="blue">
+                        <mat-icon color="white">edit</mat-icon>
+                    </button>
+                    <button mat-raised-button (click)="deletePost()" color="warn">
+                        <mat-icon color="white">delete</mat-icon>
+                    </button>
+                </p>
+            </ng-template>
+            <ng-container *ngIf="(userData.id == post.uid) then author;"></ng-container>
+        </ng-template>
     </ng-template>
 </section>

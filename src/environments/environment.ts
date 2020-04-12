@@ -5,14 +5,14 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: "AIzaSyAtMaCmvjOLdW0rW4CZQ2X9WjtmHQv9Xn4",
-    authDomain: "angular-allsi.firebaseapp.com",
-    databaseURL: "https://angular-allsi.firebaseio.com",
-    projectId: "angular-allsi",
-    storageBucket: "angular-allsi.appspot.com",
-    messagingSenderId: "315890013013",
-    appId: "1:315890013013:web:6eac2dbbb4ba89fd1ed5dc",
-    measurementId: "G-063QJ5Z2R6"
+    apiKey: "AIzaSyAz3ilXtUO2k25kTO_oJrqrQbIuvKyXjsE",
+    authDomain: "travel-journal-a2277.firebaseapp.com",
+    databaseURL: "https://travel-journal-a2277.firebaseio.com",
+    projectId: "travel-journal-a2277",
+    storageBucket: "travel-journal-a2277.appspot.com",
+    messagingSenderId: "771205301466",
+    appId: "1:771205301466:web:db45c2d3ffb2c65f6f11e3",
+    measurementId: "G-QY3V6FJF7Z"
   }
 };
 

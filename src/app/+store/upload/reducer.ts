@@ -13,8 +13,8 @@ const initialState: IState = {
 export function reducer(state = initialState, action: Actions): IState {
     switch(action.type) {
         case ActionTypes.UploadFileSuccess: {
-            const {url, name} = (action as  UploadFileSuccess).payload;
-            return {...state, uploadedFileData: {url, name}};
+            const uploadedFileData = (action as  UploadFileSuccess).payload;
+            return {...state, uploadedFileData: uploadedFileData};
         }
     }
     return state;

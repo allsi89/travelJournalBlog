@@ -6,7 +6,6 @@ import { AllPosts, ActionTypes } from 'src/app/+store/post/actions';
 import { Observable } from 'rxjs';
 import { ofType } from '@ngrx/effects';
 
-
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
@@ -17,6 +16,7 @@ export class ListComponent implements OnInit {
   buttonName: string = 'Table View';
   cardView: boolean = true;
   loaded: boolean = false;
+  hasPosts: boolean = true;
 
   constructor(
     private store: Store<IAppState>,
@@ -30,7 +30,12 @@ export class ListComponent implements OnInit {
     ).subscribe(() => {
       this.postList$ = this.store.select(getAllPostsSelector);
       this.postList$.subscribe;
+      setTimeout(()=> {
+        this.loaded = true;
+      }, 1000)
+    }, err => {
       this.loaded = true;
+      this.hasPosts = false;
     })
   }
 

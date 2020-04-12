@@ -8,7 +8,6 @@ export const errorMsgs: { [key: string] : string} = {
     passwordsNotMatch: `Passwords don't match`
 }
 
-
 export class PasswordValidator {
     static matchPasswords( ac: AbstractControl) {
         let password = ac.get('password').value;

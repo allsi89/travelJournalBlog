@@ -14,7 +14,6 @@ export class LoginComponent implements OnInit {
   errors = errorMsgs;
   hide = true;
 
-
   constructor(
     private fb: FormBuilder,
     private store: Store<any>

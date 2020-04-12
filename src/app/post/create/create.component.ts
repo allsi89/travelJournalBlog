@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { IAppState, UploadDataSelector } from 'src/app/+store';
-import { Store, ActionsSubject } from '@ngrx/store';
-import { first, filter } from 'rxjs/operators';
-import { CreatePost, ActionTypes as PostActions } from 'src/app/+store/post/actions';
-import { UploadFile, ActionTypes as UploadActions } from 'src/app/+store/upload/actions';
+import { Store } from '@ngrx/store';
+import { filter, first } from 'rxjs/operators';
+import { CreatePost } from 'src/app/+store/post/actions';
+import { UploadFile } from 'src/app/+store/upload/actions';
+import { IPost } from 'src/app/core/interfaces/post';
 import { AuthService } from 'src/app/auth/service/auth.service';
-import { ofType } from '@ngrx/effects';
 
 @Component({
   selector: 'app-create-post',
@@ -15,6 +15,7 @@ import { ofType } from '@ngrx/effects';
   styleUrls: ['./create.component.scss']
 })
 export class CreateComponent implements OnInit {
+
   private _selectedFiles: FileList;
   selectedImg: File;
   createPostForm: FormGroup;
@@ -23,7 +24,6 @@ export class CreateComponent implements OnInit {
     private fb: FormBuilder,
     private snackbar: MatSnackBar,
     private store: Store<IAppState>,
-    private actionSubject: ActionsSubject,
     private authService: AuthService
   ) { }
 
@@ -50,24 +50,28 @@ export class CreateComponent implements OnInit {
 
   dispatchStoreAction(title, text) {
     const user = this.authService.userData;
-    this.store.dispatch(new UploadFile(this.selectedImg));
+    const post = this.createIPostObj(
+      {
+        uid: user.id,
+        author: user.username,
+        imgUrl: null,
+        imgName: null,
+        title, text
+      });
 
-    this.actionSubject.pipe(
-      ofType(UploadActions.UploadFileSuccess)
-    ).subscribe(() => {
+    this.store.dispatch(new UploadFile(this.selectedImg))
+    
+    setTimeout(() => {
       this.store.select(UploadDataSelector).pipe(
         filter(this.hasValue),
         first()).subscribe(uploadData => {
-          const data = { uid: user.id, author: user.username, url: uploadData.url, imgName:uploadData.name, title, text };
-          this.store.dispatch(new CreatePost(data));
+          post.imgName = uploadData.name;
+          post.imgUrl = uploadData.url;
+          this.store.dispatch(new CreatePost(post));
         })
-    })
+    }, 1000)
 
-    this.actionSubject.pipe(
-      ofType(PostActions.CreatePostSuccess)
-    ).subscribe(() => {
-      this.resetForm();
-    })
+    this.resetForm();
   }
 
   private resetForm() {
@@ -83,7 +87,20 @@ export class CreateComponent implements OnInit {
     this._selectedFiles = event.target.files;
   }
 
-  private hasValue(value: {url:string, name: string}) {
+  private hasValue(value: { url: string, name: string }) {
     return value !== null && value !== undefined;
+  }
+
+  private createIPostObj(data): IPost {
+    return <IPost>{
+      author: data.author,
+      uid: data.uid,
+      createdOn: new Date(),
+      likes: [],
+      title: data.title,
+      text: data.text,
+      imgUrl: data.imgUrl,
+      imgName: data.imgName
+    }
   }
 }

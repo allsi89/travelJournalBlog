@@ -6,7 +6,7 @@
         <mat-icon matBadge={{post.likes.length}} color="pink">favorite</mat-icon>
     </mat-card-title>
     <!-- author -->
-    <a class="author-link" routerLink="" (click)="getUserPosts(post)">{{post.author}}</a>
+    <a class="author-link" (click)="getUserPosts(post.uid)" routerLink="">{{post.author}}</a>
   </mat-card-header>
   <!-- image -->
   <img mat-card-image src="{{ post.imgUrl }}" alt="Photo" />
@@ -20,12 +20,12 @@
     [innerHtml]="(post.text.length> 100)? (post.text | slice:0:200)+'...':(post.text)"></mat-card-content>
   <!-- Actions -->
   <mat-card-actions fxLayoutGap="1em" fxLayoutAlign="end">
-    <button mat-fab (click)="getPostInfo(post.id)" color="aqua">
+    <button mat-fab (click)="getPostInfo(post.uid, post.id)" color="aqua">
       <mat-icon color="white">pageview</mat-icon>
     </button>
     <!-- Actions for post author when in user/posts page -->
     <ng-template #authorized>
-      <button mat-raised-button (click)="getEditPost(post.id)" color="blue">
+      <button mat-raised-button (click)="getEditPost(post.uid, post.id)" color="blue">
         Edit <mat-icon color="white">edit</mat-icon>
       </button>
       <button mat-raised-button (click)="deletePost()" color="warn">

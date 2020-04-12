@@ -1,8 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { IPost } from 'src/app/core/interfaces/post';
 import { MatTableDataSource } from '@angular/material/table';
-import { HelperService } from 'src/app/core/services/helper.service';
-import { NavService } from 'src/app/core/services/nav.service';
+import { Navigator } from 'src/app/core/services/navigator.service';
 
 @Component({
   selector: 'app-table',
@@ -15,17 +14,14 @@ export class TableComponent implements OnInit {
   displayedColumns: string[] = ['createdOn', 'title', 'author'];
   dataSource: MatTableDataSource<IPost>;
 
-  constructor(
-    private helper: HelperService,
-    private navService: NavService
-    ) { }
+  constructor( private navigator: Navigator ) { }
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource(this.postList);
   }
 
-  getUserPosts(post: IPost) {
-    this.helper.getUserPosts(post);
+  getUserPosts(uid: string) {
+    this.navigator.userJournal(uid);
   }
 
   applyFilter(event: Event) {
@@ -33,7 +29,7 @@ export class TableComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  getPostInfo(id: string) {
-    this.navService.getPostInfo(id);
+  getPostInfo(userId: string, id: string) {
+    this.navigator.getPostInfo(userId, id);
   }
 }

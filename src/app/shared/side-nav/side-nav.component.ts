@@ -6,6 +6,8 @@ import { UserPosts } from 'src/app/+store/post/actions';
 import { Logout } from 'src/app/+store/auth/actions';
 import { AuthService } from 'src/app/auth/service/auth.service';
 import { Router } from '@angular/router';
+import { Navigator } from 'src/app/core/services/navigator.service';
+import { UserById } from 'src/app/+store/user/actions';
 
 @Component({
   selector: 'app-side-nav',
@@ -18,14 +20,13 @@ export class SideNavComponent {
   constructor(
     private store: Store<IAppState>,
     private authService: AuthService,
-    private router: Router
+    private navigator: Navigator
   ) {
     this.isAuth$ = this.store.select(getIsAuthenticated);
   }
 
   getUserPosts() {
-    this.store.dispatch(new UserPosts(this.authService.userData));
-    this.router.navigate(['user/my-journal']);
+    this.navigator.userJournal(this.authService.userData.id);
   }
 
   logout() {

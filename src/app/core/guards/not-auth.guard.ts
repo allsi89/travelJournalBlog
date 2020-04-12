@@ -2,13 +2,14 @@ import {
     CanActivate, 
     ActivatedRouteSnapshot, 
     RouterStateSnapshot,
-    Router
   } from '@angular/router';
   import { Injectable } from '@angular/core';
   import { Store } from '@ngrx/store';
   import { IAppState, getIsAuthenticated } from 'src/app/+store';
   import { map } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Navigator as NavigatorService } from 'src/app/core/services/navigator.service';
+
   
   @Injectable({
     providedIn: 'root'
@@ -16,8 +17,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   
   export class NotAuthGuard implements CanActivate {
     constructor(
+      private navigator: NavigatorService,
       private snakcbar: MatSnackBar,
-      private router: Router,
       private store: Store<IAppState>
     ) { }
   
@@ -28,7 +29,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
               this.snakcbar.open('You are not allowed to access this URL!', 'Close', {
                   duration: 4000
               })
-              this.router.navigate(['post/list'])
+              this.navigator.postList();
             return false;
           }
           return true;

@@ -2,6 +2,9 @@
     <div *ngIf="!loaded; else showContent" fxLayoutAlign="center center" class="center">
         <mat-spinner></mat-spinner>
     </div>
+    <div *ngIf="!hasPosts;" class="header" fxLayoutAlign="center center">
+        <h1 class="page-title-h">No Posts Found</h1>
+    </div>
     <ng-template #showContent>
         <div class="header" fxLayoutAlign="center center">
             <h1 class="page-title-h">Posts</h1>

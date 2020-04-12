@@ -2,8 +2,13 @@ import { Component, OnInit, Input } from '@angular/core';
 import { IPost } from 'src/app/core/interfaces/post';
 import { IUser } from 'src/app/core/interfaces/user';
 import { ActivatedRoute } from '@angular/router';
-import { HelperService } from 'src/app/core/services/helper.service';
-import { NavService } from 'src/app/core/services/nav.service';
+import { Navigator } from 'src/app/core/services/navigator.service';
+import { Store, ActionsSubject } from '@ngrx/store';
+import { IAppState } from 'src/app/+store';
+import { DeletePost, ActionTypes } from 'src/app/+store/post/actions';
+import { DeleteFile } from 'src/app/+store/upload/actions';
+import { AuthService } from 'src/app/auth/service/auth.service';
+import { ofType } from '@ngrx/effects';
 
 @Component({
   selector: 'app-card',
@@ -18,12 +23,14 @@ export class CardComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private helper: HelperService,
-    private navService: NavService
+    private authService: AuthService,
+    private navigator: Navigator,
+    private store: Store<IAppState>,
+    private actionSubject: ActionsSubject,
   ) { }
 
   ngOnInit(): void {
-    this._userData = this.helper.getCurrentUser();
+    this._userData = this.authService.userData;
     this.isUPostPage$ = this.route.snapshot.parent.url[0].path == 'user';
     if(this._userData) {
       this.isAuthor$ = this._userData.id == this.post.uid;
@@ -31,19 +38,19 @@ export class CardComponent implements OnInit {
   }
 
   deletePost() {
-    this.helper.deletePost(this.post);
+    this.store.dispatch(new DeletePost(this.post));
+    this.store.dispatch(new DeleteFile(this.post.imgUrl));
   }
 
-  getUserPosts(post: IPost) {
-    this.helper.getUserPosts(post);
+  getUserPosts(uid: string) {
+    this.navigator.userJournal(uid);
   }
 
-  getPostInfo(id: string) {
-    this.navService.getPostInfo(id);
-    
+  getPostInfo(userId: string, id: string) {
+    this.navigator.getPostInfo(userId, id);
   }
 
-  getEditPost(id: string) {
-    this.navService.getPostEdit(id);
+  getEditPost(userId: string, id: string) {
+    this.navigator.getPostEdit(userId, id);
   }
 }

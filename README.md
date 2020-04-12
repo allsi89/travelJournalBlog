@@ -8,7 +8,6 @@ Public parts:
 - All Posts - two different views: 
    1. Normal view, including all posts as cards
    2. Table view, including brief information about all posts
-- User Posts
 - Login 
 - Regiser
 
@@ -18,6 +17,7 @@ Private Parts:
 - User Posts
 - Post Info
 - Like Post
+- Edit Post (only init view and access to it, no actual edit logic)
 
 Functionalities:
 1. Completed:
@@ -26,7 +26,7 @@ Functionalities:
  - Upload Images for posts
  - Like posts
  - View posts by author
- - Filter posts on All Posts Page/ Table view
+ - Filter posts on Table view All Posts (no paging or sort => To Be Added)
  - View Details Page for each post
  - Form validations
  
@@ -37,6 +37,15 @@ Functionalities:
  - comment on posts
  - notifications on own posts' comments
  - edit post
+ - post structure with location
+ - map travel locations -> inclusion of travel entry location 
+ 
+ Database structures:
+ 
+ 1. Users database: collection of users where each user = {username, id, email} (To Add profile picture, brief description)
+ 2. Posts database(name: posts-db): collection of documents(docId = userId) where each user has a collection of posts (To add collection of comments for each post)
+ 
+ 
 
 Providers used:
 - Angular FireStore: database + storage for images

@@ -69,12 +69,21 @@ export class SetUser implements IAction<{ userId: string, username: string }> {
 
 export type Actions =
   Register
-  | RegisterSuccess
-  | RegisterFailed
-  | Login
-  | LoginSuccess
-  | LoginFailed
-  | Logout
-  | LoginSuccess
-  | LoginFailed
-  | SetUser ;
+  |
+  RegisterSuccess
+  |
+  RegisterFailed
+  |
+  Login
+  |
+  LoginSuccess
+  |
+  LoginFailed
+  |
+  Logout
+  |
+  LoginSuccess
+  |
+  LoginFailed
+  |
+  SetUser;

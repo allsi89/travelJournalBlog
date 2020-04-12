@@ -18,6 +18,7 @@ import { reducers } from './+store';
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { PostEffects } from './+store/post/effects';
 import { UploadEffects } from './+store/upload/effects';
+import { UserEffects } from './+store/user/effects';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,7 @@ import { UploadEffects } from './+store/upload/effects';
     AuthModule,
     HomeModule,
     PostsModule,
-    EffectsModule.forRoot([AuthEffects, PostEffects, UploadEffects]),
+    EffectsModule.forRoot([AuthEffects, PostEffects, UploadEffects, UserEffects]),
     StoreModule.forRoot(reducers),
     StoreDevtoolsModule.instrument({})
   ],

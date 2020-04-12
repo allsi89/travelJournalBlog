@@ -1,11 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { ActionTypes, Register, RegisterSuccess, Login, LoginSuccess, LoginFailed, Logout, LogoutSuccess, LogoutFailed, RegisterFailed, SetUser } from './actions';
+import {
+  ActionTypes,
+  Register, RegisterSuccess, RegisterFailed,
+  Login, LoginSuccess, LoginFailed,
+  Logout, LogoutSuccess, LogoutFailed,
+  SetUser
+} from './actions';
 import { AuthService } from 'src/app/auth/service/auth.service';
-import { Router } from '@angular/router';
 import { map, switchMap } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import { Navigator } from 'src/app/core/services/navigator.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,50 +20,8 @@ export class AuthEffects {
     private actions$: Actions,
     private authService: AuthService,
     private snackbar: MatSnackBar,
-    private router: Router
+    private navigator: Navigator
   ) { }
-
-  /** Login */
-  @Effect() login$ = this.actions$.pipe(
-    ofType<Login>(ActionTypes.Login),
-    map(action => action.payload),
-    switchMap(({ email, password }) => {
-      return this.authService
-        .loginUser(email, password)
-        .then(userData => {
-          this.router.navigate(['post/list']);
-          const user =  {userId: userData.uid, username: userData.displayName};
-          localStorage.setItem('user', JSON.stringify(user));
-          return new LoginSuccess(user);
-        })
-        .catch(error => {
-          this.snackbar.open(error.message, 'Undo', {
-            duration: 3000
-          });
-          return new LoginFailed(error);
-        })
-    })
-  );
-
-  /** Logout */
-  @Effect() logout$ = this.actions$.pipe(
-    ofType<Logout>(ActionTypes.Logout),
-    switchMap(async () => {
-      try {
-        this.authService
-          .logout();
-        localStorage.clear();
-        this.router.navigate(['/']);
-        return new LogoutSuccess();
-      }
-      catch (error) {
-        this.snackbar.open(error.message, 'Undo', {
-          duration: 3000
-        });
-        return new LogoutFailed(error);
-      }
-    })
-  );
 
   /** Register */
   @Effect() register$ = this.actions$.pipe(
@@ -66,17 +29,58 @@ export class AuthEffects {
     map(action => action.payload),
     switchMap(({ email, password, username }) => {
       return this.authService.registerUser(email, password, username)
-        .then(data => {
-          this.router.navigate(['/login'])
-          return new RegisterSuccess()
-        })
-        .catch(error => {
-          this.snackbar.open(error.message, 'Undo', {
+        .then(() => {
+          this.snackbar.open('Successful registration!', 'Close', {
             duration: 3000
           });
-          return new RegisterFailed(error);
+          this.navigator.login();
+          return new RegisterSuccess();
         })
+        .catch(err => {
+          this.snackbar.open(err.message, 'Close', {
+            duration: 3000
+          });
+          return [new RegisterFailed(err)];
+        })
+    })
+  );
 
+  /** Login */
+  @Effect() login$ = this.actions$.pipe(
+    ofType<Login>(ActionTypes.Login),
+    map(action => action.payload),
+    switchMap(({ email, password }) => {
+      return this.authService.loginUser(email, password)
+        .then(userData => {
+          this.navigator.postList();
+          const user = { userId: userData.uid, username: userData.displayName };
+          localStorage.setItem('user', JSON.stringify(user));
+          return new LoginSuccess(user);
+        })
+        .catch(err => {
+          this.snackbar.open(err.message, 'Close', {
+            duration: 3000
+          });
+          return [new LoginFailed(err)];
+        })
+    })
+  );
+
+  /** Logout */
+  @Effect() logout$ = this.actions$.pipe(
+    ofType<Logout>(ActionTypes.Logout),
+    switchMap(() => {
+      return this.authService.logout()
+      .then(() => {
+        localStorage.clear();
+        this.navigator.home();
+        return new LogoutSuccess();
+      }).catch(err => {
+        this.snackbar.open(err.message, 'Close', {
+          duration: 3000
+        });
+        return new LogoutFailed(err);
+      })
     })
   );
 

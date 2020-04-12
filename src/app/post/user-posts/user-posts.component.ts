@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { IPost } from 'src/app/core/interfaces/post';
 import { Store, ActionsSubject } from '@ngrx/store';
-import { IAppState, getUserPostsSelector, getUserByPostsSelector } from 'src/app/+store';
-import { IUser } from 'src/app/core/interfaces/user';
-import { AuthService } from 'src/app/auth/service/auth.service';
-import { ActionTypes } from 'src/app/+store/post/actions';
+import { IAppState, getUserPostsSelector, getRequestedUserSelector } from 'src/app/+store';
+import { ActionTypes as PostActions, UserPosts } from 'src/app/+store/post/actions';
+import { ActionTypes as UserActions } from 'src/app/+store/user/actions';
 import { ofType } from '@ngrx/effects';
+import { ActivatedRoute, Router } from '@angular/router';
+import { UserById } from 'src/app/+store/user/actions';
 
 @Component({
   selector: 'app-user-posts',
@@ -14,32 +14,52 @@ import { ofType } from '@ngrx/effects';
   styleUrls: ['./user-posts.component.scss']
 })
 export class UserPostsComponent implements OnInit {
-  postList$: Observable<IPost[]>;
-  user$: IUser;
+  postList: IPost[];
   loaded: boolean = false;
+  title: string = null;
 
   constructor(
     private store: Store<IAppState>,
     private actionSubject: ActionsSubject,
-    private authService: AuthService
-  ) { }
+    private route: ActivatedRoute,
+    private router: Router
+  ) { 
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+  }
 
   ngOnInit(): void {
-    this.postList$ = this.store.select(getUserPostsSelector);
-    this.postList$.subscribe;
-    
+    const userId = this.route.snapshot.paramMap.get('userId');
+    this.store.dispatch(new UserPosts(userId))
+    this.store.dispatch(new UserById(userId));
+    this.store.select(getUserPostsSelector)
+      .subscribe(posts => {
+        if (posts) {
+          this.postList = posts;
+        }
+      });
+
+    this.setTitle();
+    this.setLoaded();
+  }
+
+  setTitle() {
     this.actionSubject.pipe(
-      ofType(ActionTypes.GetUserPostsSuccess)
+      ofType(UserActions.UserByIdSuccess)
     ).subscribe(() => {
-      this.store.select(getUserByPostsSelector)
-      .subscribe(user => {
-        this.user$ = user;
-       
-        setTimeout(() => {
-          this.loaded = true;
-  
-        }, 1000)
-      }, err => console.error(err));
-    })
+      this.store.select(getRequestedUserSelector)
+        .subscribe(user => {
+          this.title = `${user.username}'s journal`;
+        })
+    });
+  }
+
+  setLoaded() {
+    this.actionSubject.pipe(
+      ofType(PostActions.GetUserPostsSuccess)
+    ).subscribe(() => {
+      setTimeout(() => {
+        this.loaded = true;
+      }, 1000)
+    });
   }
 }
