@@ -3,7 +3,6 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { ActionTypes,UploadFile, UploadFileSuccess, UploadFileFailed, DeleteFile, DeleteFileSuccess, DeleteFileFailed } from './actions';
 import { map, switchMap } from 'rxjs/operators';
 import { UploadService } from 'src/app/core/services/upload.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
     providedIn: 'root'
@@ -12,8 +11,6 @@ export class UploadEffects {
     constructor(
         private actions$: Actions,
         private uploadService: UploadService,
-        private snackbar: MatSnackBar,
-        // private helperService: HelperService
     ) {  }
 
     @Effect() uploadFile$ = this.actions$.pipe(
@@ -26,10 +23,7 @@ export class UploadEffects {
                     return new UploadFileSuccess(data)
                 })
                 .catch(err => {
-                    this.snackbar.open(err.message, 'Close', {
-                        duration: 3000
-                    });
-                   return [new UploadFileFailed({ error: err })]
+                   return new UploadFileFailed(err);
                 })
         })
     );
@@ -43,10 +37,7 @@ export class UploadEffects {
                     return new DeleteFileSuccess()
                 })
                 .catch(err => {
-                    this.snackbar.open(err.message, 'Close', {
-                        duration: 3000
-                    });
-                    return [new DeleteFileFailed({ error: err })];
+                    return new DeleteFileFailed(err);
                 })
         })
     );

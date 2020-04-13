@@ -40,7 +40,7 @@ export class AuthEffects {
           this.snackbar.open(err.message, 'Close', {
             duration: 3000
           });
-          return [new RegisterFailed(err)];
+          return new RegisterFailed(err);
         })
     })
   );
@@ -61,7 +61,7 @@ export class AuthEffects {
           this.snackbar.open(err.message, 'Close', {
             duration: 3000
           });
-          return [new LoginFailed(err)];
+          return new LoginFailed(err);
         })
     })
   );

@@ -3,12 +3,11 @@ import { IPost } from 'src/app/core/interfaces/post';
 import { IUser } from 'src/app/core/interfaces/user';
 import { ActivatedRoute } from '@angular/router';
 import { Navigator } from 'src/app/core/services/navigator.service';
-import { Store, ActionsSubject } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { IAppState } from 'src/app/+store';
-import { DeletePost, ActionTypes } from 'src/app/+store/post/actions';
+import { DeletePost } from 'src/app/+store/post/actions';
 import { DeleteFile } from 'src/app/+store/upload/actions';
 import { AuthService } from 'src/app/auth/service/auth.service';
-import { ofType } from '@ngrx/effects';
 
 @Component({
   selector: 'app-card',
@@ -25,8 +24,7 @@ export class CardComponent implements OnInit {
     private route: ActivatedRoute,
     private authService: AuthService,
     private navigator: Navigator,
-    private store: Store<IAppState>,
-    private actionSubject: ActionsSubject,
+    private store: Store<IAppState>
   ) { }
 
   ngOnInit(): void {

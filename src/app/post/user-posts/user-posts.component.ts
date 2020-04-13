@@ -49,8 +49,8 @@ export class UserPostsComponent implements OnInit {
       this.store.select(getRequestedUserSelector)
         .subscribe(user => {
           this.title = `${user.username}'s journal`;
-        })
-    });
+        }, err => console.error(err))
+    }, err => console.error(err));
   }
 
   setLoaded() {
@@ -60,6 +60,6 @@ export class UserPostsComponent implements OnInit {
       setTimeout(() => {
         this.loaded = true;
       }, 1000)
-    });
+    }, err => console.error(err));
   }
 }

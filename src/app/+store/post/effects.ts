@@ -42,7 +42,7 @@ export class PostEffects {
                     this.snackbar.open(err.message, 'Close', {
                         duration: 4000
                     });
-                    return new CreatePostFailed({ error: err });
+                    return new CreatePostFailed(err);
                 })
         })
     );
@@ -110,15 +110,13 @@ export class PostEffects {
         switchMap(post => {
             return this.postService.deletePost(post)
                 .then(() => {
-
-                    // this.navigator.myJournal()
                     return new DeletePostSuccess();
                 })
                 .catch(err => {
                     this.snackbar.open(err.message, 'Close', {
                         duration: 3000
                     });
-                    return [new DeletePostFailed({ error: err })]
+                    return new DeletePostFailed(err);
                 });
         })
     );
@@ -132,7 +130,7 @@ export class PostEffects {
                 .then(() => {
                     return new LikePostSuccess();
                 })
-                .catch(err => [new LikePostFailed({ error: err })]);
+                .catch(err => new LikePostFailed(err));
         })
     );
 }

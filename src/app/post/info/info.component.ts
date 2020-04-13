@@ -41,7 +41,7 @@ export class InfoComponent implements OnInit {
         this.post = data;
         this.loaded = true;
       })
-    })
+    }, err => console.error(err.message))
   }
 
   deletePost() {

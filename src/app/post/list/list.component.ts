@@ -15,8 +15,6 @@ export class ListComponent implements OnInit {
   postList$: Observable<IPost[]>;
   buttonName: string = 'Table View';
   cardView: boolean = true;
-  loaded: boolean = false;
-  hasPosts: boolean = true;
 
   constructor(
     private store: Store<IAppState>,
@@ -30,13 +28,7 @@ export class ListComponent implements OnInit {
     ).subscribe(() => {
       this.postList$ = this.store.select(getAllPostsSelector);
       this.postList$.subscribe;
-      setTimeout(()=> {
-        this.loaded = true;
-      }, 1000)
-    }, err => {
-      this.loaded = true;
-      this.hasPosts = false;
-    })
+    }, err => console.error(err.message))
   }
 
   toggle() {
